@@ -23,7 +23,7 @@ export const StyledInput = styled.input`
 
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
-  font-size: 1rem;
+  font-size: 0.8rem;
   color: ${({ theme }) => theme.colors.text.primary};
 
   &::placeholder {
@@ -33,7 +33,7 @@ export const StyledInput = styled.input`
   }
 
   border: 1px solid ${({ theme }) => theme.colors.borders.gray};
-  border-radius: 0.5rem;
+  border-radius: ${({ theme }) => theme.borderRadius.input};
 
   &:focus {
     border-color: ${({ theme }) => theme.colors.borders.focus};
