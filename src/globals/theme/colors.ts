@@ -9,6 +9,7 @@ export const THEME_COLORS: ColorsWildcards = {
     secondary: "#A8ACB9",
   },
   borders: {
+    error: "#9d0208",
     gray: "#E0E0E0",
     focus: "#FDC3CF",
   },

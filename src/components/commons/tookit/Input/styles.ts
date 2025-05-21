@@ -11,7 +11,16 @@ export const Container = styled.div`
   gap: 0.5rem;
 `;
 
-export const StyledInput = styled.input`
+export const InputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+interface StyledInputProps {
+  $hasError: boolean;
+}
+
+export const StyledInput = styled.input<StyledInputProps>`
   all: unset;
   outline: none;
 
@@ -32,7 +41,9 @@ export const StyledInput = styled.input`
     color: ${({ theme }) => theme.colors.text.secondary};
   }
 
-  border: 1px solid ${({ theme }) => theme.colors.borders.gray};
+  border: 1px solid
+    ${({ theme, $hasError }) =>
+      $hasError ? theme.colors.borders.error : theme.colors.borders.gray};
   border-radius: ${({ theme }) => theme.borderRadius.input};
 
   &:focus {

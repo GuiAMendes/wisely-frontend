@@ -23,6 +23,8 @@ declare module "styled-components" {
     black: string;
     hover: string;
     borders: {
+      error: string;
+      focus: string;
       gray: string;
     };
   }
