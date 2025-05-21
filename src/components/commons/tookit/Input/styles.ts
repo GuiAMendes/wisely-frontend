@@ -53,15 +53,15 @@ export const StyledInput = styled.input<StyledInputProps>`
 
 export const ToggleIcon = styled.div`
   position: absolute;
+  top: 50%;
+  right: 0.75rem;
 
-  width: 2rem;
-  height: 3.25rem;
+  cursor: pointer;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  cursor: pointer;
-  left: calc(100% - 2rem);
-  top: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
 `;

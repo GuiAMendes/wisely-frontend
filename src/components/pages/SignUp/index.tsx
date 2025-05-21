@@ -8,7 +8,7 @@ import { Button } from "@components/tookit/buttons/Button";
 import { Typography } from "@components/tookit/Typography";
 
 // Hooks
-import { useLogin } from "./hooks/useLogin";
+import { useSignUp } from "./hooks/useSignUp";
 
 // Styles
 import {
@@ -23,9 +23,9 @@ import {
 } from "./styles";
 import { theme } from "@globals/theme";
 
-export const Login: React.FC = () => {
+export const SignUp: React.FC = () => {
   // Hooks
-  const { loginInfos, handleChange, handleSubmit } = useLogin();
+  const { signUpInfos, handleChange, handleSubmit } = useSignUp();
 
   return (
     <Container>
@@ -43,22 +43,29 @@ export const Login: React.FC = () => {
 
         <Card>
           <TextWrapper>
-            <Typography $variant="h1">Welcome back!</Typography>
+            <Typography $variant="h1">Welcome to Wisely!</Typography>
 
             <Typography
               $variant="p"
               fontWeight="bold"
               color={theme.colors.text.secondary}
             >
-              Enter your details
+              Register your account
             </Typography>
           </TextWrapper>
 
           <InputsWrapper>
             <Input
+              label="Name:"
+              placeholder="Enter your name"
+              value={signUpInfos.name}
+              onChangeText={(value) => handleChange({ name: value })}
+            />
+
+            <Input
               label="Email:"
               placeholder="Enter your  email"
-              value={loginInfos.email}
+              value={signUpInfos.email}
               onChangeText={(value) => handleChange({ email: value })}
             />
 
@@ -66,20 +73,20 @@ export const Login: React.FC = () => {
               type="password"
               label="Password:"
               placeholder="10+ characters"
-              value={loginInfos.password}
+              value={signUpInfos.password}
               onChangeText={(value) => handleChange({ password: value })}
             />
           </InputsWrapper>
 
-          <Button label="Sign in" onClick={handleSubmit} />
+          <Button label="Sign up" onClick={handleSubmit} />
 
           <TextLinkWrapper>
             <Typography $variant="p" color={theme.colors.text.secondary}>
-              Don´t have an account?
+              Already have an account?
             </Typography>
-            <StyledLink href="./signup">
+            <StyledLink href="./login">
               <Typography $variant="p" fontWeight="bold">
-                Sign up for free
+                Sign in
               </Typography>
             </StyledLink>
           </TextLinkWrapper>

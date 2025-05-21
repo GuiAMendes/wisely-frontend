@@ -59,7 +59,11 @@ export const Input: React.FC<InputProps> = ({
 
         {props.type === "password" && (
           <ToggleIcon onClick={handleTogglePassword}>
-            {showPassword ? <FaEyeSlash /> : <FaEye />}
+            {showPassword ? (
+              <FaEyeSlash color={theme.colors.text.secondary} />
+            ) : (
+              <FaEye color={theme.colors.text.secondary} />
+            )}
           </ToggleIcon>
         )}
       </InputWrapper>
