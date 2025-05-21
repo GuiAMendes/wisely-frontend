@@ -8,7 +8,7 @@ export interface TypographyProps extends PropsWithChildren {
   fontSize?: string
   fontWeight?: FontWeight
   $textAlign?: TextAlign
-  variant: keyof TypographyVariants
+  $variant: keyof TypographyVariants
 }
 
 
