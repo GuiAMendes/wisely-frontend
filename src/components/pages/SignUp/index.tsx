@@ -25,7 +25,7 @@ import { theme } from "@globals/theme";
 
 export const SignUp: React.FC = () => {
   // Hooks
-  const { signUpInfos, handleChange, handleSubmit } = useSignUp();
+  const { errors, signUpInfos, handleChange, handleSubmit } = useSignUp();
 
   return (
     <Container>
@@ -56,23 +56,29 @@ export const SignUp: React.FC = () => {
 
           <InputsWrapper>
             <Input
+              required
               label="Name:"
               placeholder="Enter your name"
+              errors={errors.name}
               value={signUpInfos.name}
               onChangeText={(value) => handleChange({ name: value })}
             />
 
             <Input
+              required
               label="Email:"
               placeholder="Enter your  email"
+              errors={errors.email}
               value={signUpInfos.email}
               onChangeText={(value) => handleChange({ email: value })}
             />
 
             <Input
+              required
               type="password"
               label="Password:"
               placeholder="10+ characters"
+              errors={errors.password}
               value={signUpInfos.password}
               onChangeText={(value) => handleChange({ password: value })}
             />

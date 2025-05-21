@@ -6,7 +6,13 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Typography } from "@components/tookit/Typography";
 
 // Styles
-import { Container, InputWrapper, StyledInput, ToggleIcon } from "./styles";
+import {
+  Container,
+  InputMessageWrapper,
+  InputWrapper,
+  StyledInput,
+  ToggleIcon,
+} from "./styles";
 import { theme } from "@globals/theme";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -43,30 +49,32 @@ export const Input: React.FC<InputProps> = ({
         {label}
       </Typography>
 
-      <InputWrapper>
+      <InputMessageWrapper>
         {errors ? (
           <Typography $variant="p" color={theme.colors.borders.error}>
             {errors}
           </Typography>
         ) : null}
 
-        <StyledInput
-          {...props}
-          $hasError={!!errors}
-          type={inputType}
-          onChange={handleChange}
-        />
+        <InputWrapper>
+          <StyledInput
+            {...props}
+            $hasError={!!errors}
+            type={inputType}
+            onChange={handleChange}
+          />
 
-        {props.type === "password" && (
-          <ToggleIcon onClick={handleTogglePassword}>
-            {showPassword ? (
-              <FaEyeSlash color={theme.colors.text.secondary} />
-            ) : (
-              <FaEye color={theme.colors.text.secondary} />
-            )}
-          </ToggleIcon>
-        )}
-      </InputWrapper>
+          {props.type === "password" && (
+            <ToggleIcon onClick={handleTogglePassword}>
+              {showPassword ? (
+                <FaEyeSlash color={theme.colors.text.secondary} />
+              ) : (
+                <FaEye color={theme.colors.text.secondary} />
+              )}
+            </ToggleIcon>
+          )}
+        </InputWrapper>
+      </InputMessageWrapper>
     </Container>
   );
 };

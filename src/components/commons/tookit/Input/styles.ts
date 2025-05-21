@@ -12,6 +12,7 @@ export const Container = styled.div`
 `;
 
 export const InputWrapper = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
 `;
@@ -19,6 +20,11 @@ export const InputWrapper = styled.div`
 interface StyledInputProps {
   $hasError: boolean;
 }
+
+export const InputMessageWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 export const StyledInput = styled.input<StyledInputProps>`
   all: unset;
@@ -53,7 +59,7 @@ export const StyledInput = styled.input<StyledInputProps>`
 
 export const ToggleIcon = styled.div`
   position: absolute;
-  top: 50%;
+  top: calc(50% - 0.75rem);
   right: 0.75rem;
 
   cursor: pointer;

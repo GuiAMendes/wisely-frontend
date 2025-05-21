@@ -1,16 +1,22 @@
 // External Libraries
 import { useState } from "react";
 
+// Utils
+import {
+  checkLoginErrors,
+  makeInitialErrors,
+  makeInitialSignUpInfos,
+} from "./utils";
+
 // Types
-import { SignUpInfos } from "@pages/SignUp/types";
+import { SignUpErrors, SignUpInfos } from "@pages/SignUp/types";
 
 export function useSignUp() {
   // States
-  const [signUpInfos, setSignUpInfos] = useState<SignUpInfos>({
-    name: "",
-    email: "",
-    password: "",
-  });
+  const [signUpInfos, setSignUpInfos] = useState<SignUpInfos>(
+    makeInitialSignUpInfos
+  );
+  const [errors, setErrors] = useState<SignUpErrors>(makeInitialErrors);
 
   // Functions
   function handleChange(signUpInfos: Partial<SignUpInfos>) {
@@ -18,6 +24,12 @@ export function useSignUp() {
   }
 
   async function handleSubmit() {
+    const errors = checkLoginErrors(signUpInfos);
+
+    setErrors(errors);
+
+    if (Object.values(errors).some((error) => error)) return;
+
     try {
       console.log("Login enviado:", signUpInfos);
     } catch (error) {
@@ -26,6 +38,7 @@ export function useSignUp() {
   }
 
   return {
+    errors,
     signUpInfos,
     handleChange,
     handleSubmit,

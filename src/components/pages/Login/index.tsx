@@ -25,18 +25,18 @@ import { theme } from "@globals/theme";
 
 export const Login: React.FC = () => {
   // Hooks
-  const { loginInfos, handleChange, handleSubmit } = useLogin();
+  const { errors, loginInfos, handleChange, handleSubmit } = useLogin();
 
   return (
     <Container>
       <Wrapper>
         <ImageWrapper>
           <Image
-            src="/images/gatinho.webp"
-            alt="Cute kitten looking forward"
             fill
             priority
             sizes="10rem"
+            src="/images/gatinho.webp"
+            alt="Cute kitten looking forward"
             style={{ objectFit: "cover" }}
           />
         </ImageWrapper>
@@ -56,15 +56,19 @@ export const Login: React.FC = () => {
 
           <InputsWrapper>
             <Input
+              required
               label="Email:"
+              errors={errors?.email}
               placeholder="Enter your  email"
               value={loginInfos.email}
               onChangeText={(value) => handleChange({ email: value })}
             />
 
             <Input
+              required
               type="password"
               label="Password:"
+              errors={errors?.password}
               placeholder="10+ characters"
               value={loginInfos.password}
               onChangeText={(value) => handleChange({ password: value })}
