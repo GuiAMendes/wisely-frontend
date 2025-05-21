@@ -7,22 +7,36 @@ export const Container = styled.div`
 
   display: flex;
   flex-direction: column;
+
+  gap: 0.5rem;
 `;
 
 export const StyledInput = styled.input`
+  all: unset;
+  outline: none;
+
+  width: 100%;
+  padding: 0.5rem;
+  box-sizing: border-box;
+
   position: relative;
 
-  padding: 1rem;
-  width: 15rem;
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 1rem;
+  color: ${({ theme }) => theme.colors.text.primary};
 
-  border: 2px solid #ccc;
+  &::placeholder {
+    font-size: 0.875rem;
+    font-weight: 300;
+    color: ${({ theme }) => theme.colors.text.secondary};
+  }
+
+  border: 1px solid ${({ theme }) => theme.colors.borders.gray};
   border-radius: 0.5rem;
 
-  outline: none;
-  transition: border-color 0.3s ease;
-
   &:focus {
-    border-color: #cce8f5;
+    border-color: ${({ theme }) => theme.colors.borders.focus};
   }
 `;
 

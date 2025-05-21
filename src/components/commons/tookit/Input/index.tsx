@@ -36,7 +36,9 @@ export const Input: React.FC<InputProps> = ({
 
   return (
     <Container>
-      <Typography $variant="p">{label}</Typography>
+      <Typography $variant="p" fontWeight="bold">
+        {label}
+      </Typography>
 
       <StyledInput {...props} type={inputType} onChange={handleChange} />
 
