@@ -7,36 +7,67 @@ export const Container = styled.div`
 
   display: flex;
   flex-direction: column;
+
+  gap: 0.5rem;
 `;
 
-export const StyledInput = styled.input`
+export const InputWrapper = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+`;
+
+interface StyledInputProps {
+  $hasError: boolean;
+}
+
+export const InputMessageWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const StyledInput = styled.input<StyledInputProps>`
+  all: unset;
+  outline: none;
+
+  width: 100%;
+  padding: 0.5rem;
+  box-sizing: border-box;
+
   position: relative;
 
-  padding: 1rem;
-  width: 15rem;
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 0.8rem;
+  color: ${({ theme }) => theme.colors.text.primary};
 
-  border: 2px solid #ccc;
-  border-radius: 0.5rem;
+  &::placeholder {
+    font-size: 0.875rem;
+    font-weight: 300;
+    color: ${({ theme }) => theme.colors.text.secondary};
+  }
 
-  outline: none;
-  transition: border-color 0.3s ease;
+  border: 1px solid
+    ${({ theme, $hasError }) =>
+      $hasError ? theme.colors.borders.error : theme.colors.borders.gray};
+  border-radius: ${({ theme }) => theme.borderRadius.input};
 
   &:focus {
-    border-color: #cce8f5;
+    border-color: ${({ theme }) => theme.colors.borders.focus};
   }
 `;
 
 export const ToggleIcon = styled.div`
   position: absolute;
+  top: calc(50% - 0.75rem);
+  right: 0.75rem;
 
-  width: 2rem;
-  height: 3.25rem;
+  cursor: pointer;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  cursor: pointer;
-  left: calc(100% - 2rem);
-  top: 50%;
+  width: 1.5rem;
+  height: 1.5rem;
 `;

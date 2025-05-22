@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
   * {
@@ -12,7 +12,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    font-family: 'Roboto', sans-serif;
+     font-family: 'Montserrat', sans-serif;
     -webkit-font-smoothing: antialiased;
   }
 
@@ -37,4 +37,4 @@ export const GlobalStyle = createGlobalStyle`
 @media (min-width: 2561px) {
   font-size: 16px;
 }
-`
+`;

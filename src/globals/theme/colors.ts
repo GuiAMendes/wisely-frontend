@@ -6,10 +6,12 @@ export const THEME_COLORS: ColorsWildcards = {
   gray: "#F2F2F2",
   text: {
     primary: "#2C2C2C",
-    secondary: "#9B9B9B",
+    secondary: "#A8ACB9",
   },
   borders: {
+    error: "#d90429",
     gray: "#E0E0E0",
+    focus: "#FDC3CF",
   },
   white: "#FFFFFF",
   black: "#000000",
