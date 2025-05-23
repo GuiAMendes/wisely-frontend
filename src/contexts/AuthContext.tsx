@@ -11,7 +11,6 @@ interface LoginCredentials {
 export interface User {
   id: number;
   email: string;
-  role: string;
   token: string;
   exp: number;
   iat: number;
@@ -60,8 +59,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       );
       const token = response.data.token;
       const decodedToken = jwtDecode<{
-        id: number;
-        role: string;
+        sub: number;
         exp: number;
         iat: number;
       }>(token);
@@ -71,9 +69,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       const userData = {
-        id: decodedToken.id,
+        id: decodedToken.sub,
         email: credentials.email,
-        role: decodedToken.role,
         exp: decodedToken.exp,
         iat: decodedToken.iat,
         token,
