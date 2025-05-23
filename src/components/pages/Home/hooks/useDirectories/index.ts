@@ -1,0 +1,35 @@
+import useSWR from "swr";
+import { useLogin } from "@contexts/AuthContext";
+import { getDirectories } from "@services/directories/[userId].directory.get";
+
+export function useDirectories() {
+  const { user } = useLogin();
+
+  const shouldFetch = Boolean(user?.id && user?.token);
+
+  const { data, error, isLoading, mutate } = useSWR(
+    shouldFetch ? `/${user?.id}/directory` : null,
+    fetchDirectories,
+    {
+      revalidateOnFocus: false,
+    }
+  );
+
+  async function fetchDirectories() {
+    if (!user) return;
+
+    try {
+      console.log(user.token);
+      return getDirectories(user.id, user.token);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  return {
+    directories: data,
+    isLoading,
+    error,
+    mutate,
+  };
+}

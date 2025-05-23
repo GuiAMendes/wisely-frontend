@@ -1,15 +1,20 @@
 // External Libraries
 import { useState } from "react";
 
+// Services
+import { postRegister } from "@services/user/register.post";
+
 // Utils
 import {
   checkLoginErrors,
   makeInitialErrors,
+  buildPayload,
   makeInitialSignUpInfos,
 } from "./utils";
 
 // Types
 import { SignUpErrors, SignUpInfos } from "@pages/SignUp/types";
+import { useRouter } from "next/router";
 
 export function useSignUp() {
   // States
@@ -17,6 +22,9 @@ export function useSignUp() {
     makeInitialSignUpInfos
   );
   const [errors, setErrors] = useState<SignUpErrors>(makeInitialErrors);
+
+  // Hooks
+  const { push } = useRouter();
 
   // Functions
   function handleChange(signUpInfos: Partial<SignUpInfos>) {
@@ -31,7 +39,8 @@ export function useSignUp() {
     if (Object.values(errors).some((error) => error)) return;
 
     try {
-      console.log("Login enviado:", signUpInfos);
+      await postRegister(buildPayload(signUpInfos));
+      push("/login");
     } catch (error) {
       console.error("Erro no login:", error);
     }

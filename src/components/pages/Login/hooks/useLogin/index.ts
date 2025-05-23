@@ -1,5 +1,7 @@
-// External Libraries
 import { useState } from "react";
+
+// Hooks
+import { useLogin as useAuthLogin } from "@contexts/AuthContext";
 
 // Utils
 import {
@@ -11,6 +13,7 @@ import {
 // Types
 import type { LoginInfos } from "@pages/Login/types";
 import type { LoginErrors } from "@pages/Login/types/loginErrors";
+import { useRouter } from "next/router";
 
 export function useLogin() {
   // States
@@ -19,27 +22,33 @@ export function useLogin() {
   );
   const [errors, setErrors] = useState<LoginErrors>(makeInitialErrors);
 
-  // Functions
+  // Hooks
+  const { push } = useRouter();
+  const { login, error: authError, isLoading } = useAuthLogin();
+
   function handleChange(loginInfo: Partial<LoginInfos>) {
     setErrors(makeInitialErrors);
     setLoginInfos((prev) => ({ ...prev, ...loginInfo }));
   }
 
   async function handleSubmit() {
-    const errors = checkLoginErrors(loginInfos);
-    setErrors(errors);
+    const validationErrors = checkLoginErrors(loginInfos);
+    setErrors(validationErrors);
 
-    if (Object.values(errors).some((error) => error)) return;
+    if (Object.values(validationErrors).some((e) => e)) return;
 
-    try {
-      console.log("Login enviado:", loginInfos);
-    } catch (error) {
-      console.error("Erro no login:", error);
-    }
+    await login({
+      email: loginInfos.email,
+      password: loginInfos.password,
+    });
+
+    push("/");
   }
 
   return {
     errors,
+    authError,
+    isLoading,
     loginInfos,
     handleChange,
     handleSubmit,

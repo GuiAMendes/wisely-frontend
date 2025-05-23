@@ -3,20 +3,24 @@ import React from "react";
 
 // Components
 import { Navigation } from "@components/structure/Navigation";
-
-// Hooks
-import { useHome } from "./hooks/useHome";
+import { DirectoriesList } from "./sections/DirectoriesList";
 
 // Styles
-import { Container } from "./styles";
+import { Container, PageContent } from "./styles";
+import { useDirectories } from "./hooks/useDirectories";
 
 export const Home: React.FC = () => {
-  // Hooks
-  const {} = useHome({});
+  const { directories } = useDirectories();
+
+  console.log(directories);
 
   return (
     <Container>
       <Navigation />
+
+      <PageContent>
+        <DirectoriesList />
+      </PageContent>
     </Container>
   );
 };
