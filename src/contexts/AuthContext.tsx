@@ -1,8 +1,13 @@
+// External library
 import { createContext, useContext, useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
-import axios, { AxiosError } from "axios";
 import { useRouter } from "next/router";
+import { AxiosError } from "axios";
 
+// Service
+import API from "@services/api";
+
+// Types
 interface LoginCredentials {
   email: string;
   password: string;
@@ -53,10 +58,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/login`,
-        credentials
-      );
+      const response = await API.post("/login", credentials);
       const token = response.data.token;
       const decodedToken = jwtDecode<{
         sub: number;
