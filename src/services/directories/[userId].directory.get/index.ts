@@ -5,9 +5,9 @@ import API from "@services/api";
 import { getAuthHeaders } from "@utils/getAuthHeaders";
 
 // Types
-import { HttpResponse } from "./response";
+import { HttpResponse, ListAllInput } from "./response";
 
-export async function getDirectories(userId: number) {
+export async function getDirectories({ userId }: ListAllInput) {
   const url = `/${userId}/directory`;
   const options = getAuthHeaders();
 

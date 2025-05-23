@@ -5,9 +5,11 @@ import API from "@services/api";
 import { getAuthHeaders } from "@utils/getAuthHeaders";
 
 // Types
-import { HttpResponse } from "./response";
+import { HttpResponse, ListRecentDirectoriesAccessed } from "./response";
 
-export async function getRecentDirectoriesAccessed(userId: number) {
+export async function getRecentDirectoriesAccessed({
+  userId,
+}: ListRecentDirectoriesAccessed) {
   const url = `/${userId}/directory/recents`;
   const options = getAuthHeaders();
 

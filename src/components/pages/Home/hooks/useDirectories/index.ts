@@ -22,10 +22,9 @@ export function useDirectories() {
 
   async function fetchDirectories() {
     if (!user) return;
-
     try {
       console.log(user.token);
-      return getDirectories(user.id);
+      return getDirectories({ userId: user.id });
     } catch (error) {
       console.log(error);
     }

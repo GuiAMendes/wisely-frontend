@@ -24,7 +24,7 @@ export function useRecentDirectories() {
     if (!user) return;
 
     try {
-      return getRecentDirectoriesAccessed(user.id);
+      return getRecentDirectoriesAccessed({ userId: user.id });
     } catch (error) {
       console.log(error);
     }

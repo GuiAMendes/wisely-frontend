@@ -14,7 +14,7 @@ interface LoginCredentials {
 }
 
 export interface User {
-  id: number;
+  id: string;
   email: string;
   token: string;
   exp: number;
@@ -61,7 +61,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       const response = await API.post("/login", credentials);
       const token = response.data.token;
       const decodedToken = jwtDecode<{
-        sub: number;
+        sub: string;
         exp: number;
         iat: number;
       }>(token);
