@@ -7,3 +7,10 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
+export const PageContent = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  padding: 2rem;
+`;

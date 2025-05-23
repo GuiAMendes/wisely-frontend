@@ -1,5 +1,5 @@
-import { SignUp } from "@pages/SignUp";
+import { Home } from "@pages/Home";
 
 export default function Page() {
-  return <SignUp />;
+  return <Home />;
 }

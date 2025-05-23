@@ -13,6 +13,7 @@ import {
 // Types
 import type { LoginInfos } from "@pages/Login/types";
 import type { LoginErrors } from "@pages/Login/types/loginErrors";
+import { useRouter } from "next/router";
 
 export function useLogin() {
   // States
@@ -21,7 +22,8 @@ export function useLogin() {
   );
   const [errors, setErrors] = useState<LoginErrors>(makeInitialErrors);
 
-  
+  // Hooks
+  const { push } = useRouter();
   const { login, error: authError, isLoading } = useAuthLogin();
 
   function handleChange(loginInfo: Partial<LoginInfos>) {
@@ -39,6 +41,8 @@ export function useLogin() {
       email: loginInfos.email,
       password: loginInfos.password,
     });
+
+    push("/");
   }
 
   return {

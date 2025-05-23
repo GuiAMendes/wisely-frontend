@@ -8,6 +8,7 @@ import {
 import { AxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { postLogin } from "@services/user/login.post";
+import { jwtDecode } from "jwt-decode";
 
 export interface LoginCredentials {
   email: string;
@@ -17,7 +18,7 @@ export interface LoginCredentials {
 export interface User {
   email: string;
   token: string;
-  id: string; 
+  id: string;
 }
 
 interface AuthContextProps {
@@ -52,8 +53,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const response = await postLogin(credentials);
       const { token } = response.data;
 
-      const payload = JSON.parse(atob(token.split(".")[1]));
-      const id = payload.sub;
+      const decodedToken = jwtDecode<{
+        id: number;
+        role: string;
+        exp: number;
+        iat: number;
+      }>(token);
+      const id = String(decodedToken.id);
 
       const userData: User = {
         email: credentials.email,
