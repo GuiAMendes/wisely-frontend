@@ -16,7 +16,6 @@ export interface LoginCredentials {
 
 export interface User {
   email: string;
-  userName: string;
   token: string;
 }
 
@@ -51,11 +50,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     try {
       const response = await postLogin(credentials);
 
-      const { token, userName } = response.data;
+      const { token } = response.data;
 
       const userData: User = {
         email: credentials.email,
-        userName,
         token,
       };
 
