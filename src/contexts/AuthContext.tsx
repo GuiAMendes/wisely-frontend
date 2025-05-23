@@ -17,6 +17,7 @@ export interface LoginCredentials {
 export interface User {
   email: string;
   token: string;
+  id: string; 
 }
 
 interface AuthContextProps {
@@ -49,12 +50,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     try {
       const response = await postLogin(credentials);
-
       const { token } = response.data;
+
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      const id = payload.sub;
 
       const userData: User = {
         email: credentials.email,
         token,
+        id,
       };
 
       setUser(userData);
