@@ -33,9 +33,12 @@ export const Tab = styled.div`
   z-index: 2;
 
   max-width: 100%;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+
+  p {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 `;
 
 export const Content = styled.div`

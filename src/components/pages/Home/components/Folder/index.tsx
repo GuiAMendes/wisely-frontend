@@ -16,7 +16,7 @@ export const Folder: React.FC<FolderProps> = ({ name, onClick }) => {
   return (
     <Container onClick={onClick}>
       <Tab>
-        <Typography $variant="p" fontWeight="bold">
+        <Typography as="p" $variant="p" fontWeight="bold">
           {name}
         </Typography>
       </Tab>
