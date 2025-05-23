@@ -1,24 +1,20 @@
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  ReactNode,
-} from "react";
-import { AxiosError } from "axios";
-import { useRouter } from "next/navigation";
-import { postLogin } from "@services/user/login.post";
+import { createContext, useContext, useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
+import axios, { AxiosError } from "axios";
+import { useRouter } from "next/router";
 
-export interface LoginCredentials {
+interface LoginCredentials {
   email: string;
   password: string;
 }
 
 export interface User {
+  id: number;
   email: string;
+  role: string;
   token: string;
-  id: string;
+  exp: number;
+  iat: number;
 }
 
 interface AuthContextProps {
@@ -31,16 +27,25 @@ interface AuthContextProps {
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const router = useRouter();
+  const { push } = useRouter();
 
   useEffect(() => {
+    setIsLoading(true);
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      const userData = JSON.parse(storedUser);
+      const isExpired = checkTokenExpiration(userData.exp);
+      if (!isExpired) {
+        setUser(userData);
+      } else {
+        logout();
+      }
+    } else {
+      logout();
     }
     setIsLoading(false);
   }, []);
@@ -48,46 +53,61 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const login = async (credentials: LoginCredentials) => {
     setIsLoading(true);
     setError(null);
-
     try {
-      const response = await postLogin(credentials);
-      const { token } = response.data;
-
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/login`,
+        credentials
+      );
+      const token = response.data.token;
       const decodedToken = jwtDecode<{
         id: number;
         role: string;
         exp: number;
         iat: number;
       }>(token);
-      const id = String(decodedToken.id);
 
-      const userData: User = {
+      if (decodedToken.exp * 1000 < Date.now()) {
+        throw new Error("Token expirado");
+      }
+
+      const userData = {
+        id: decodedToken.id,
         email: credentials.email,
+        role: decodedToken.role,
+        exp: decodedToken.exp,
+        iat: decodedToken.iat,
         token,
-        id,
       };
 
       setUser(userData);
-      localStorage.setItem("user", JSON.stringify(userData));
       localStorage.setItem("token", token);
-
-      router.push("/");
+      localStorage.setItem("user", JSON.stringify(userData));
     } catch (err) {
       const axiosError = err as AxiosError;
-      const message =
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (axiosError.response?.data as any)?.message || "Erro ao fazer login";
-      setError(message);
+      if (
+        axiosError.response?.data &&
+        typeof axiosError.response.data === "object"
+      ) {
+        const message = (axiosError.response.data as { message: string })
+          .message;
+        setError(message || "Falha ao realizar login");
+      } else {
+        setError("Falha ao realizar login");
+      }
     } finally {
       setIsLoading(false);
     }
   };
 
   const logout = () => {
-    localStorage.removeItem("user");
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     setUser(null);
-    router.push("/login");
+    push("/login");
+  };
+
+  const checkTokenExpiration = (exp: number) => {
+    return exp * 1000 < Date.now();
   };
 
   return (
@@ -99,7 +119,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
 export const useLogin = () => {
   const context = useContext(AuthContext);
-  if (!context) {
+  if (context === undefined) {
     throw new Error("useLogin must be used within an AuthProvider");
   }
   return context;

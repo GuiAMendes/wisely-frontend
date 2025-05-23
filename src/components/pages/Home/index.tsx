@@ -12,6 +12,8 @@ import { useDirectories } from "./hooks/useDirectories";
 export const Home: React.FC = () => {
   const { directories } = useDirectories();
 
+  console.log(directories);
+
   return (
     <Container>
       <Navigation />
