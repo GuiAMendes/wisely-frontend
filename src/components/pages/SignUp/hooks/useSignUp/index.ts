@@ -1,10 +1,14 @@
 // External Libraries
 import { useState } from "react";
 
+// Services
+import { postRegister } from "@services/user/register.post";
+
 // Utils
 import {
   checkLoginErrors,
   makeInitialErrors,
+  buildPayload,
   makeInitialSignUpInfos,
 } from "./utils";
 
@@ -31,7 +35,7 @@ export function useSignUp() {
     if (Object.values(errors).some((error) => error)) return;
 
     try {
-      console.log("Login enviado:", signUpInfos);
+      await postRegister(buildPayload(signUpInfos));
     } catch (error) {
       console.error("Erro no login:", error);
     }

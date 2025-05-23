@@ -1,5 +1,7 @@
-// External Libraries
 import { useState } from "react";
+
+// Hooks
+import { useLogin as useAuthLogin } from "@contexts/AuthContext";
 
 // Utils
 import {
@@ -19,27 +21,30 @@ export function useLogin() {
   );
   const [errors, setErrors] = useState<LoginErrors>(makeInitialErrors);
 
-  // Functions
+  
+  const { login, error: authError, isLoading } = useAuthLogin();
+
   function handleChange(loginInfo: Partial<LoginInfos>) {
     setErrors(makeInitialErrors);
     setLoginInfos((prev) => ({ ...prev, ...loginInfo }));
   }
 
   async function handleSubmit() {
-    const errors = checkLoginErrors(loginInfos);
-    setErrors(errors);
+    const validationErrors = checkLoginErrors(loginInfos);
+    setErrors(validationErrors);
 
-    if (Object.values(errors).some((error) => error)) return;
+    if (Object.values(validationErrors).some((e) => e)) return;
 
-    try {
-      console.log("Login enviado:", loginInfos);
-    } catch (error) {
-      console.error("Erro no login:", error);
-    }
+    await login({
+      email: loginInfos.email,
+      password: loginInfos.password,
+    });
   }
 
   return {
     errors,
+    authError,
+    isLoading,
     loginInfos,
     handleChange,
     handleSubmit,
