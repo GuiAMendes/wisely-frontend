@@ -20,6 +20,9 @@ export const Container = styled.div`
 export const Tab = styled.div`
   position: absolute;
 
+  width: 5rem;
+  height: 1.5rem;
+
   top: -1rem;
   left: 0.5rem;
 
@@ -38,5 +41,10 @@ export const Content = styled.div`
   right: 0;
   top: 0.75rem;
   border-radius: 0.25rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   background-color: ${({ theme }) => theme.colors.primary};
 `;
