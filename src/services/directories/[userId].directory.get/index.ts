@@ -1,13 +1,24 @@
+// Service
 import API from "@services/api";
 
-export async function getDirectories(userId: number, token: string) {
+// Utils
+import { getAuthHeaders } from "@utils/getAuthHeaders";
+
+// Types
+import { HttpResponse } from "./response";
+
+export async function getDirectories(userId: number) {
   const url = `/${userId}/directory`;
+  const options = getAuthHeaders();
 
-  const response = await API.get(url, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  try {
+    if (!options) {
+      throw new Error("Token is missing or invalid.");
+    }
 
-  return response.data;
+    const response = await API.get<HttpResponse>(url, options);
+    return response.data.directories;
+  } catch (error) {
+    console.log(error);
+  }
 }

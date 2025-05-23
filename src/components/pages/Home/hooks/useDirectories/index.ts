@@ -5,7 +5,7 @@ import { getDirectories } from "@services/directories/[userId].directory.get";
 export function useDirectories() {
   const { user } = useLogin();
 
-  const shouldFetch = Boolean(user?.id && user?.token);
+  const shouldFetch = Boolean(user?.id);
 
   const { data, error, isLoading, mutate } = useSWR(
     shouldFetch ? `/${user?.id}/directory` : null,
@@ -20,7 +20,7 @@ export function useDirectories() {
 
     try {
       console.log(user.token);
-      return getDirectories(user.id, user.token);
+      return getDirectories(user.id);
     } catch (error) {
       console.log(error);
     }
