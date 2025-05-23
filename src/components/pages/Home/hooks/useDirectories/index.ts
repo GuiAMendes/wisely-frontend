@@ -1,5 +1,10 @@
+// External library
 import useSWR from "swr";
+
+// Context
 import { useLogin } from "@contexts/AuthContext";
+
+// Service
 import { getDirectories } from "@services/directories/[userId].directory.get";
 
 export function useDirectories() {
