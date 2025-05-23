@@ -2,7 +2,7 @@
 import React from "react";
 
 // Components
-import { Folder } from "./components/Folder";
+import { Navigation } from "@components/structure/Navigation";
 
 // Hooks
 import { useHome } from "./hooks/useHome";
@@ -16,12 +16,7 @@ export const Home: React.FC = () => {
 
   return (
     <Container>
-      <Folder
-        name={"tezste"}
-        onClick={function (): void {
-          throw new Error("Function not implemented.");
-        }}
-      ></Folder>
+      <Navigation />
     </Container>
   );
 };
