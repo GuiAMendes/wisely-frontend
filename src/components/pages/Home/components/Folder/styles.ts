@@ -1,6 +1,9 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
+  min-width: 10rem;
+  min-height: 8rem;
+
   width: 12rem;
   height: 8rem;
 
@@ -20,6 +23,9 @@ export const Container = styled.div`
 export const Tab = styled.div`
   position: absolute;
 
+  width: 3rem;
+  height: 2rem;
+
   top: -1rem;
   left: 0.5rem;
 
@@ -28,6 +34,13 @@ export const Tab = styled.div`
   border-radius: 0.25rem;
 
   z-index: 2;
+
+  p {
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 `;
 
 export const Content = styled.div`
