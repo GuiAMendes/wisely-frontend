@@ -5,10 +5,12 @@ import API from "@services/api";
 import { getAuthHeaders } from "@utils/getAuthHeaders";
 
 // Types
-import { HttpResponse, ListAllInput } from "./response";
+import { HttpResponse, ListRecentDirectoriesAccessed } from "./response";
 
-export async function getDirectories({ userId }: ListAllInput) {
-  const url = `/${userId}/directory`;
+export async function getRecentDirectoriesAccessed({
+  userId,
+}: ListRecentDirectoriesAccessed) {
+  const url = `/${userId}/directory/recents`;
   const options = getAuthHeaders();
 
   try {
@@ -17,7 +19,7 @@ export async function getDirectories({ userId }: ListAllInput) {
     }
 
     const response = await API.get<HttpResponse>(url, options);
-    return response.data.directories;
+    return response.data.recentDirectoriesAccessed;
   } catch (error) {
     console.log(error);
   }

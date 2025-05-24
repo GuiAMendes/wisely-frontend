@@ -5,9 +5,13 @@ import API from "@services/api";
 import { getAuthHeaders } from "@utils/getAuthHeaders";
 
 // Types
-import { HttpResponse, ListAllInput } from "./response";
+import type { CreateDirectoryServiceInput, HttpResponse } from "./response";
 
-export async function getDirectories({ userId }: ListAllInput) {
+export async function createDirectory({
+  userId,
+  name,
+  isTemplate = false,
+}: CreateDirectoryServiceInput) {
   const url = `/${userId}/directory`;
   const options = getAuthHeaders();
 
@@ -16,8 +20,12 @@ export async function getDirectories({ userId }: ListAllInput) {
       throw new Error("Token is missing or invalid.");
     }
 
-    const response = await API.get<HttpResponse>(url, options);
-    return response.data.directories;
+    const response = await API.post<HttpResponse>(
+      url,
+      { name, isTemplate },
+      options
+    );
+    return response.data;
   } catch (error) {
     console.log(error);
   }

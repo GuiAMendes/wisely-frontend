@@ -20,7 +20,7 @@ export const Container = styled.div`
 export const Tab = styled.div`
   position: absolute;
 
-  width: 8rem;
+  width: 5rem;
   height: 1.5rem;
 
   top: -1rem;
@@ -31,14 +31,6 @@ export const Tab = styled.div`
   border-radius: 0.25rem;
 
   z-index: 2;
-
-  max-width: 100%;
-
-  p {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
 `;
 
 export const Content = styled.div`

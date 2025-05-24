@@ -5,33 +5,33 @@ import useSWR from "swr";
 import { useLogin } from "@contexts/AuthContext";
 
 // Service
-import { getDirectories } from "@services/directories/[userId].directory.get";
+import { getRecentDirectoriesAccessed } from "@services/directories/[userId].directory.recents.get";
 
-export function useDirectories() {
+export function useRecentDirectories() {
   const { user } = useLogin();
 
   const shouldFetch = Boolean(user?.id);
 
   const { data, error, isLoading, mutate } = useSWR(
-    shouldFetch ? `/${user?.id}/directory` : null,
-    fetchDirectories,
+    shouldFetch ? `/${user?.id}/directory/recents` : null,
+    fetchRecentAccessed,
     {
       revalidateOnFocus: false,
     }
   );
 
-  async function fetchDirectories() {
+  async function fetchRecentAccessed() {
     if (!user) return;
+
     try {
-      console.log(user.token);
-      return getDirectories({ userId: user.id });
+      return getRecentDirectoriesAccessed({ userId: user.id });
     } catch (error) {
       console.log(error);
     }
   }
 
   return {
-    directories: data,
+    recentDirectoriesAccessed: data,
     isLoading,
     error,
     mutate,
