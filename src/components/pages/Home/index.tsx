@@ -1,5 +1,5 @@
 // External Libraries
-import React from "react";
+import React, { useRef } from "react";
 
 // Components
 import { Navigation } from "@components/structure/Navigation";
@@ -11,9 +11,14 @@ import { useDirectories } from "./hooks/useDirectories";
 import { useRecentDirectories } from "./hooks/useRecentDirectories";
 import { Typography } from "@components/tookit/Typography";
 import { CreateFolder } from "./components/CreateFolder";
+import { ManageDirectoryModal } from "./modals/ManageDirectoryModal";
+import { ManageDirectoryModalMethods } from "./modals/ManageDirectoryModal/types";
 
 export const Home: React.FC = () => {
-  const { directories } = useDirectories();
+  // Refs
+  const modalRef = useRef<ManageDirectoryModalMethods>(null);
+
+  const { directories, mutate } = useDirectories();
   const { recentDirectoriesAccessed } = useRecentDirectories();
 
   return (
@@ -29,7 +34,7 @@ export const Home: React.FC = () => {
             </Typography>
           </TextContainer>
 
-          <CreateFolder onClick={() => console.log("opa")} />
+          <CreateFolder onClick={() => modalRef.current?.open()} />
         </Wrapper>
 
         <Wrapper>
@@ -56,6 +61,8 @@ export const Home: React.FC = () => {
           <DirectoriesList directories={directories} variant="all" />
         </Wrapper>
       </PageContent>
+
+      <ManageDirectoryModal ref={modalRef} refresh={mutate} />
     </Container>
   );
 };
