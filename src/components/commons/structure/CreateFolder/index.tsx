@@ -3,6 +3,7 @@ import React from "react";
 
 // Styles
 import { Container, Tab, Content } from "./styles";
+import Image from "next/image";
 
 interface FolderProps {
   onClick: () => void;
@@ -14,7 +15,7 @@ export const CreateFolder: React.FC<FolderProps> = ({ onClick }) => {
       <Tab />
 
       <Content>
-        <img src="/folder.svg" />
+        <Image src="/folder.svg" alt="Folder" width={40} height={40} />
       </Content>
     </Container>
   );

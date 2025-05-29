@@ -3,20 +3,20 @@ import React, { useRef } from "react";
 
 // Components
 import { Navigation } from "@components/structure/Navigation";
-import { DirectoriesList } from "./sections/DirectoriesList";
+import { JourneyList } from "./sections/JourneyList";
 
 // Styles
 import { Container, PageContent, TextContainer, Wrapper } from "./styles";
 import { useDirectories } from "./hooks/useDirectories";
 import { useRecentDirectories } from "./hooks/useRecentDirectories";
 import { Typography } from "@components/tookit/Typography";
-import { ManageDirectoryModal } from "./modals/ManageDirectoryModal";
-import { ManageDirectoryModalMethods } from "./modals/ManageDirectoryModal/types";
-import { CreateFolder } from "@components/structure/CreateFolder";
+import { ManageJourneyModal } from "./modals/ManageJourneyModal";
+import { ManageJourneyModalMethods } from "./modals/ManageJourneyModal/types";
+import { CreateJourney } from "@components/structure/CreateJourney";
 
-export const Home: React.FC = () => {
+export const JourneysList: React.FC = () => {
   // Refs
-  const modalRef = useRef<ManageDirectoryModalMethods>(null);
+  const modalRef = useRef<ManageJourneyModalMethods>(null);
 
   const { directories, mutate } = useDirectories();
   const { recentDirectoriesAccessed } = useRecentDirectories();
@@ -30,11 +30,11 @@ export const Home: React.FC = () => {
           <TextContainer>
             <img src="/plus-circle.svg" />
             <Typography $variant="p" fontWeight="bold">
-              Create new directory
+              Create new journey
             </Typography>
           </TextContainer>
 
-          <CreateFolder onClick={() => modalRef.current?.open()} />
+          <CreateJourney onClick={() => modalRef.current?.open()} />
         </Wrapper>
 
         <Wrapper>
@@ -45,7 +45,7 @@ export const Home: React.FC = () => {
             </Typography>
           </TextContainer>
 
-          <DirectoriesList
+          <JourneyList
             directories={recentDirectoriesAccessed}
             variant="recent-access"
           />
@@ -54,15 +54,15 @@ export const Home: React.FC = () => {
         <Wrapper>
           <TextContainer>
             <Typography $variant="p" fontWeight="bold">
-              All directories
+              All journeys
             </Typography>
           </TextContainer>
 
-          <DirectoriesList directories={directories} variant="all" />
+          <JourneyList directories={directories} variant="all" />
         </Wrapper>
       </PageContent>
 
-      <ManageDirectoryModal ref={modalRef} refresh={mutate} />
+      <ManageJourneyModal ref={modalRef} refresh={mutate} />
     </Container>
   );
 };
