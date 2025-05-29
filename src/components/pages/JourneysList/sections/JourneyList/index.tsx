@@ -4,11 +4,11 @@ import { useRouter } from "next/router";
 
 // Components
 import { Directory } from "@services/directories/types";
-import { Folder } from "@components/structure/Folder";
 
 // Styles
 import { Container } from "./styles";
 import { EmptyMessage } from "@components/structure/EmptyMessage";
+import { JourneyFile } from "@components/structure/JourneyFile";
 
 interface Props {
   isLoading?: boolean;
@@ -16,7 +16,7 @@ interface Props {
   directories?: Directory[];
 }
 
-export const DirectoriesList: React.FC<Props> = ({ variant, directories }) => {
+export const JourneyList: React.FC<Props> = ({ variant, directories }) => {
   // Hooks
   const { push } = useRouter();
 
@@ -25,7 +25,7 @@ export const DirectoriesList: React.FC<Props> = ({ variant, directories }) => {
     if (!directories?.length) return <EmptyMessage variant={variant} />;
 
     return directories.map((directory) => (
-      <Folder
+      <JourneyFile
         key={directory.props.id}
         name={directory.props.directoryName}
         onClick={() => push(`/directories/${directory.props.id}/journeys`)}
