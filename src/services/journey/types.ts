@@ -12,5 +12,5 @@ export interface JourneyProps {
 }
 
 export interface Journey {
-  props: JourneyProps[];
+  props: JourneyProps;
 }
