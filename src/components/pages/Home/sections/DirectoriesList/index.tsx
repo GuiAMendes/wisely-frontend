@@ -22,7 +22,8 @@ export const DirectoriesList: React.FC<Props> = ({ variant, directories }) => {
 
   // Functions
   function renderContent() {
-    if (!directories?.length) return <EmptyMessage variant={variant} />;
+    if (!directories?.length)
+      return <EmptyMessage variant={variant} typeOfPageVariant="directory" />;
 
     return directories.map((directory) => (
       <Folder
