@@ -3,13 +3,17 @@ import useSWR from "swr";
 import { useParams } from "next/navigation";
 
 // Service
-import { getRecentJourneysAccessed } from "@services/journey/[directoryId].journey.recents.get";
+import { getRecentJourneysAccessed } from "@services/journey/directory.[directoryId].journey.recents.get";
 
-export function useRecentDirectories() {
+export function useRecentJourneys() {
   const params = useParams<{ directoryId: string }>();
 
+  const directoryId = params?.directoryId;
+
+  const shouldFetch = Boolean(directoryId);
+
   const { data, error, isLoading, mutate } = useSWR(
-    `/${params.directoryId}/journey/recents`,
+    shouldFetch ? `/${directoryId}/journey/recents` : null,
     fetchRecentAccessed,
     {
       revalidateOnFocus: false,
@@ -18,7 +22,7 @@ export function useRecentDirectories() {
 
   async function fetchRecentAccessed() {
     try {
-      return getRecentJourneysAccessed({ directoryId: params.directoryId });
+      return getRecentJourneysAccessed({ directoryId });
     } catch (error) {
       console.log(error);
     }

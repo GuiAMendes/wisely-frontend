@@ -2,7 +2,7 @@
 import { useParams } from "next/navigation";
 
 // Service
-import { createJourney } from "@services/journey/[directoryId].journey.post";
+import { createJourney } from "@services/journey/directory.[directoryId].journey.post";
 
 // Types
 import type { CreateJourneyInput } from "../types/createJourney";

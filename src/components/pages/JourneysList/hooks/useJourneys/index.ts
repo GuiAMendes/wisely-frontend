@@ -3,22 +3,26 @@ import useSWR from "swr";
 import { useParams } from "next/navigation";
 
 // Service
-import { getJourneys } from "@services/journey/[directoryId].journey.get";
+import { getJourneys } from "@services/journey/directory.[directoryId].journey.get";
 
-export function useDirectories() {
+export function useJourneys() {
   const params = useParams<{ directoryId: string }>();
 
+  const directoryId = params?.directoryId;
+
+  const shouldFetch = Boolean(directoryId);
+
   const { data, error, isLoading, mutate } = useSWR(
-    `/${params.directoryId}/journey`,
-    fetchDirectories,
+    shouldFetch ? `/${directoryId}/journey` : null,
+    fetchJourneys,
     {
       revalidateOnFocus: false,
     }
   );
 
-  async function fetchDirectories() {
+  async function fetchJourneys() {
     try {
-      return getJourneys({ directoryId: params.directoryId });
+      return getJourneys({ directoryId });
     } catch (error) {
       console.log(error);
     }
