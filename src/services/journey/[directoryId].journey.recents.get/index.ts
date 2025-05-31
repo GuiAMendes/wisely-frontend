@@ -7,7 +7,7 @@ import { getAuthHeaders } from "@utils/getAuthHeaders";
 // Types
 import { ListRecentJourneysAccessed, HttpResponse } from "./response";
 
-export async function getRecentDirectoriesAccessed({
+export async function getRecentJourneysAccessed({
   directoryId,
 }: ListRecentJourneysAccessed) {
   const url = `/${directoryId}/journey/recents`;
