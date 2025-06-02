@@ -1,4 +1,6 @@
+import { toast } from "sonner";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 // Hooks
 import { useLogin as useAuthLogin } from "@contexts/AuthContext";
@@ -13,18 +15,15 @@ import {
 // Types
 import type { LoginInfos } from "@pages/Login/types";
 import type { LoginErrors } from "@pages/Login/types/loginErrors";
-import { useRouter } from "next/router";
 
 export function useLogin() {
-  // States
   const [loginInfos, setLoginInfos] = useState<LoginInfos>(
     makeInitialLoginInfos
   );
   const [errors, setErrors] = useState<LoginErrors>(makeInitialErrors);
 
-  // Hooks
   const { push } = useRouter();
-  const { login, error: authError, isLoading } = useAuthLogin();
+  const { login, isLoading } = useAuthLogin();
 
   function handleChange(loginInfo: Partial<LoginInfos>) {
     setErrors(makeInitialErrors);
@@ -37,17 +36,21 @@ export function useLogin() {
 
     if (Object.values(validationErrors).some((e) => e)) return;
 
-    await login({
-      email: loginInfos.email,
-      password: loginInfos.password,
-    });
+    try {
+      await login({
+        email: loginInfos.email,
+        password: loginInfos.password,
+      });
 
-    push("/");
+      push("/");
+    } catch (err) {
+      const loginError = err as Error;
+      toast.error(loginError.message);
+    }
   }
 
   return {
     errors,
-    authError,
     isLoading,
     loginInfos,
     handleChange,

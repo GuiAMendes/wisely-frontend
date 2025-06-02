@@ -1,5 +1,6 @@
 import { theme } from "@globals/theme";
 import { GlobalStyle } from "@globals/index";
+import { Toaster } from "sonner";
 
 import type { AppProps } from "next/app";
 import { ThemeProvider } from "styled-components";
@@ -11,6 +12,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <GlobalStyle />
       <AuthProvider>
         <Component {...pageProps} />
+        <Toaster richColors />
       </AuthProvider>
     </ThemeProvider>
   );
