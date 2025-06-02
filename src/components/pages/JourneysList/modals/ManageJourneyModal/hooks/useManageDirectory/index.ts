@@ -1,26 +1,29 @@
 // External Libraries
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 // Utils
 import { checkErrors, makeInitialErrors, makeInitialUserInfos } from "./utils";
 
 // Services
-import { createDirectory } from "@services/directories";
-
-import { useLogin } from "@contexts/AuthContext";
+import { createJourney } from "@services/journey";
 
 // Types
 import { UseManageDirectoryParams } from "./types";
-import { JourneyInfos } from "./types/journeyInfos";
+import { JourneyErros, JourneyInfos } from "./types/journeyInfos";
 
 export function useManageDirectory({ refresh }: UseManageDirectoryParams) {
   // States
   const [visible, setVisible] = useState(false);
   const [journeyInfos, setJourneyInfos] =
     useState<JourneyInfos>(makeInitialUserInfos);
-  const [errors, setErros] = useState<JourneyInfos>(makeInitialErrors);
+  const [errors, setErros] = useState<JourneyErros>(makeInitialErrors);
 
-  const { user } = useLogin();
+  // Hooks
+  const { query } = useRouter();
+
+  // Constants
+  const directoryId = query.id as string;
 
   // Functions
   function handleRefMethods() {
@@ -33,7 +36,7 @@ export function useManageDirectory({ refresh }: UseManageDirectoryParams) {
   }
 
   async function handleCreateJourney() {
-    if (!user) return;
+    if (!directoryId) return;
 
     const errors = checkErrors(journeyInfos);
 
@@ -41,10 +44,10 @@ export function useManageDirectory({ refresh }: UseManageDirectoryParams) {
     if (Object.values(errors).some((e) => e)) return;
 
     try {
-      createDirectory({
-        userId: user.id,
+      createJourney({
+        directoryId,
         name: journeyInfos.name,
-        isTemplate: false,
+        typeOfJourney: journeyInfos.type,
       });
 
       handleClose();

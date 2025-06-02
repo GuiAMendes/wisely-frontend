@@ -6,3 +6,5 @@ export interface ManageJourneyModalMethods {
 export interface ManageJourneyModalProps {
   refresh: () => void
 }
+
+

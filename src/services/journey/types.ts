@@ -1,10 +1,8 @@
-export type TypeOfJourney = "free" | "full";
-
 export interface JourneyProps {
   id: string;
   idDirectory: string;
   journeyName: string;
-  typeOfJourney: TypeOfJourney;
+  typeOfJourney: string;
   createdAt: string;
   updatedAt: string;
   isCompleted: boolean;

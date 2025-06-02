@@ -1,4 +1,4 @@
-import { TypeOfJourney } from "../types";
+import { TypeOfJourney } from "@pages/JourneysList/modals/ManageJourneyModal/hooks/useManageDirectory/types/journeyInfos";
 
 export interface CreateJourneyServiceInput {
   directoryId: string;
