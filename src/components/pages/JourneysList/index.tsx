@@ -4,22 +4,26 @@ import React, { useRef } from "react";
 // Components
 import { Navigation } from "@components/structure/Navigation";
 import { JourneyList } from "./sections/JourneyList";
+import { Typography } from "@components/tookit/Typography";
+import { CreateJourney } from "@components/structure/CreateJourney";
+import { ManageJourneyModal } from "./modals/ManageJourneyModal";
+
+// Hooks
+import { useJourneys } from "./hooks/useJourneys";
+import { useRecentJourneys } from "./hooks/useRecentJourneys";
 
 // Styles
 import { Container, PageContent, TextContainer, Wrapper } from "./styles";
-import { useDirectories } from "./hooks/useDirectories";
-import { useRecentDirectories } from "./hooks/useRecentDirectories";
-import { Typography } from "@components/tookit/Typography";
-import { ManageJourneyModal } from "./modals/ManageJourneyModal";
-import { ManageJourneyModalMethods } from "./modals/ManageJourneyModal/types";
-import { CreateJourney } from "@components/structure/CreateJourney";
+
+// Types
+import type { ManageJourneyModalMethods } from "./modals/ManageJourneyModal/types";
 
 export const JourneysList: React.FC = () => {
   // Refs
   const modalRef = useRef<ManageJourneyModalMethods>(null);
 
-  const { directories, mutate } = useDirectories();
-  const { recentDirectoriesAccessed } = useRecentDirectories();
+  const { journeys, mutate } = useJourneys();
+  const { recentJourneysAccessed } = useRecentJourneys();
 
   return (
     <Container>
@@ -46,7 +50,7 @@ export const JourneysList: React.FC = () => {
           </TextContainer>
 
           <JourneyList
-            directories={recentDirectoriesAccessed}
+            journeys={recentJourneysAccessed}
             variant="recent-access"
           />
         </Wrapper>
@@ -58,7 +62,7 @@ export const JourneysList: React.FC = () => {
             </Typography>
           </TextContainer>
 
-          <JourneyList directories={directories} variant="all" />
+          <JourneyList journeys={journeys} variant="all" />
         </Wrapper>
       </PageContent>
 

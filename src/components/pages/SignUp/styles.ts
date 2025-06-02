@@ -43,7 +43,7 @@ export const ImageWrapper = styled.div`
   }
 `;
 
-export const Card = styled.div`
+export const Card = styled.form`
   width: 22vw;
   min-width: fit-content;
 

@@ -25,7 +25,14 @@ import { theme } from "@globals/theme";
 
 export const Login: React.FC = () => {
   // Hooks
-  const { errors, loginInfos, handleChange, handleSubmit } = useLogin();
+  const { errors, loginInfos, handleChange, handleLogin } = useLogin();
+
+  // Function
+  function handleSubmit(event?: React.FormEvent){
+    event?.preventDefault();
+
+    handleLogin();
+  };
 
   return (
     <Container>
@@ -41,7 +48,7 @@ export const Login: React.FC = () => {
           />
         </ImageWrapper>
 
-        <Card>
+        <Card onSubmit={handleSubmit}>
           <TextWrapper>
             <Typography $variant="h1">Welcome back!</Typography>
 
@@ -75,7 +82,7 @@ export const Login: React.FC = () => {
             />
           </InputsWrapper>
 
-          <Button label="Sign in" onClick={handleSubmit} />
+          <Button type="submit" label="Sign in" onClick={handleLogin} />
 
           <TextLinkWrapper>
             <Typography $variant="p" color={theme.colors.text.secondary}>

@@ -24,7 +24,6 @@ export interface User {
 interface AuthContextProps {
   user: User | null;
   isLoading: boolean;
-  error: string | null;
   login: (credentials: LoginCredentials) => Promise<void>;
   logout: () => void;
 }
@@ -34,7 +33,6 @@ const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const { push } = useRouter();
 
   useEffect(() => {
@@ -54,9 +52,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setIsLoading(false);
   }, []);
 
-  const login = async (credentials: LoginCredentials) => {
+  const login = async (credentials: LoginCredentials): Promise<void> => {
     setIsLoading(true);
-    setError(null);
     try {
       const response = await API.post("/login", credentials);
       const token = response.data.token;
@@ -89,10 +86,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       ) {
         const message = (axiosError.response.data as { message: string })
           .message;
-        setError(message || "Falha ao realizar login");
-      } else {
-        setError("Falha ao realizar login");
+        throw new Error(message || "Falha ao realizar login");
       }
+      throw new Error("Falha ao realizar login");
     } finally {
       setIsLoading(false);
     }
@@ -110,7 +106,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, error, login, logout }}>
+    <AuthContext.Provider value={{ user, isLoading, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

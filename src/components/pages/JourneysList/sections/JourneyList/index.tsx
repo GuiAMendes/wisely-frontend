@@ -3,32 +3,34 @@ import React from "react";
 import { useRouter } from "next/router";
 
 // Components
-import { Directory } from "@services/directories/types";
-
-// Styles
-import { Container } from "./styles";
+import { Journey } from "@services/journey/types";
 import { EmptyMessage } from "@components/structure/EmptyMessage";
 import { JourneyFile } from "@components/structure/JourneyFile";
 
+// Styles
+import { Container } from "./styles";
+
+// Types
 interface Props {
   isLoading?: boolean;
   variant: "recent-access" | "all";
-  directories?: Directory[];
+  journeys?: Journey[];
 }
 
-export const JourneyList: React.FC<Props> = ({ variant, directories }) => {
+export const JourneyList: React.FC<Props> = ({ variant, journeys }) => {
   // Hooks
   const { push } = useRouter();
 
   // Functions
   function renderContent() {
-    if (!directories?.length) return <EmptyMessage variant={variant} />;
+    if (!journeys?.length)
+      return <EmptyMessage variant={variant} typeOfPageVariant="journey" />;
 
-    return directories.map((directory) => (
+    return journeys.map((journey) => (
       <JourneyFile
-        key={directory.props.id}
-        name={directory.props.directoryName}
-        onClick={() => push(`/directories/${directory.props.id}/journeys`)}
+        key={journey.props.id}
+        name={journey.props.journeyName}
+        onClick={() => push(`/directory/${journey.props.id}/journey`)}
       />
     ));
   }

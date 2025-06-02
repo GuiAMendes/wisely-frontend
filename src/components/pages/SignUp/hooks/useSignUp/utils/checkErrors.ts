@@ -25,6 +25,8 @@ export function checkLoginErrors(signUpInfos: SignUpInfos): SignUpErrors {
     errors.password = "A senha deve conter pelo menos uma letra minúscula";
   } else if (!/[0-9]/.test(signUpInfos.password)) {
     errors.password = "A senha deve conter pelo menos um número";
+  } else if (!/[^A-Za-z0-9]/.test(signUpInfos.password)) {
+    errors.password = "A senha deve conter pelo menos um caractere especial";
   }
 
   return errors;

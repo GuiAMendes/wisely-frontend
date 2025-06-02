@@ -25,7 +25,14 @@ import { theme } from "@globals/theme";
 
 export const SignUp: React.FC = () => {
   // Hooks
-  const { errors, signUpInfos, handleChange, handleSubmit } = useSignUp();
+  const { errors, signUpInfos, handleChange, handleSignUp } = useSignUp();
+
+  // Function
+  function handleSubmit(event?: React.FormEvent) {
+    event?.preventDefault();
+
+    handleSignUp();
+  }
 
   return (
     <Container>
@@ -41,7 +48,7 @@ export const SignUp: React.FC = () => {
           />
         </ImageWrapper>
 
-        <Card>
+        <Card onSubmit={handleSubmit}>
           <TextWrapper>
             <Typography $variant="h1">Welcome to Wisely!</Typography>
 
@@ -67,7 +74,7 @@ export const SignUp: React.FC = () => {
             <Input
               required
               label="Email:"
-              placeholder="Enter your  email"
+              placeholder="Enter your email"
               errors={errors.email}
               value={signUpInfos.email}
               onChangeText={(value) => handleChange({ email: value })}
@@ -84,12 +91,13 @@ export const SignUp: React.FC = () => {
             />
           </InputsWrapper>
 
-          <Button label="Sign up" onClick={handleSubmit} />
+          <Button type="submit" label="Sign up" onClick={handleSignUp} />
 
           <TextLinkWrapper>
             <Typography $variant="p" color={theme.colors.text.secondary}>
               Already have an account?
             </Typography>
+
             <StyledLink href="./login">
               <Typography $variant="p" fontWeight="bold">
                 Sign in
