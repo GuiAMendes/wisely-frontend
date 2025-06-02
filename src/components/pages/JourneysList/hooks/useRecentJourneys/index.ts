@@ -1,19 +1,18 @@
 // External library
 import useSWR from "swr";
-import { useParams } from "next/navigation";
+import { useRouter } from "next/router";
 
 // Service
 import { getRecentJourneysAccessed } from "@services/journey/directory.[directoryId].journey.recents.get";
 
 export function useRecentJourneys() {
-  const params = useParams<{ directoryId: string }>();
+  // Hooks
+  const { query } = useRouter();
 
-  const directoryId = params?.directoryId;
-
-  const shouldFetch = Boolean(directoryId);
+  const directoryId = query.id as string;
 
   const { data, error, isLoading, mutate } = useSWR(
-    shouldFetch ? `/${directoryId}/journey/recents` : null,
+    `/${directoryId}/journey/recents`,
     fetchRecentAccessed,
     {
       revalidateOnFocus: false,
@@ -21,6 +20,8 @@ export function useRecentJourneys() {
   );
 
   async function fetchRecentAccessed() {
+    if (!directoryId) return;
+
     try {
       return getRecentJourneysAccessed({ directoryId });
     } catch (error) {

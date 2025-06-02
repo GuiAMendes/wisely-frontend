@@ -1,19 +1,19 @@
 // External library
 import useSWR from "swr";
-import { useParams } from "next/navigation";
+import { toast } from "sonner";
+import { useRouter } from "next/router";
 
 // Service
 import { getJourneys } from "@services/journey/directory.[directoryId].journey.get";
 
 export function useJourneys() {
-  const params = useParams<{ directoryId: string }>();
+  // Hooks
+  const { query } = useRouter();
 
-  const directoryId = params?.directoryId;
+  const directoryId = query.id as string;
 
-  const shouldFetch = Boolean(directoryId);
-
-  const { data, error, isLoading, mutate } = useSWR(
-    shouldFetch ? `/${directoryId}/journey` : null,
+  const { data, isLoading, mutate } = useSWR(
+    `/${directoryId}/journey`,
     fetchJourneys,
     {
       revalidateOnFocus: false,
@@ -22,16 +22,18 @@ export function useJourneys() {
 
   async function fetchJourneys() {
     try {
+      if (!directoryId) return;
+
       return getJourneys({ directoryId });
     } catch (error) {
       console.log(error);
+      toast.error("Erro para listar jornadas");
     }
   }
 
   return {
     journeys: data,
     isLoading,
-    error,
     mutate,
   };
 }

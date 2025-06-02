@@ -1,5 +1,5 @@
 // External library
-import { useParams } from "next/navigation";
+import { useRouter } from "next/router";
 
 // Service
 import { createJourney } from "@services/journey/directory.[directoryId].journey.post";
@@ -11,14 +11,17 @@ import type { CreateJourneyInput } from "../types/createJourney";
 import { areValidFields } from "@utils/helpers/validateFields";
 
 export function useCreateJourney() {
-  const params = useParams<{ directoryId: string }>();
+  // Hooks
+  const { query } = useRouter();
+
+  const directoryId = query.id as string;
 
   async function create({ name, typeOfJourney }: CreateJourneyInput) {
     if (areValidFields([name, typeOfJourney as string])) return;
 
     try {
       return createJourney({
-        directoryId: params.directoryId,
+        directoryId,
         name,
         typeOfJourney,
       });
