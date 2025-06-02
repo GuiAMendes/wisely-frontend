@@ -31,7 +31,7 @@ export function useSignUp() {
     setSignUpInfos((prev) => ({ ...prev, ...signUpInfos }));
   }
 
-  async function handleSubmit() {
+  async function handleSignUp() {
     const errors = checkLoginErrors(signUpInfos);
 
     setErrors(errors);
@@ -50,6 +50,6 @@ export function useSignUp() {
     errors,
     signUpInfos,
     handleChange,
-    handleSubmit,
+    handleSignUp,
   };
 }

@@ -75,7 +75,7 @@ export const Login: React.FC = () => {
             />
           </InputsWrapper>
 
-          <Button label="Sign in" onClick={handleSubmit} />
+          <Button type="submit" label="Sign in" onClick={handleSubmit} />
 
           <TextLinkWrapper>
             <Typography $variant="p" color={theme.colors.text.secondary}>

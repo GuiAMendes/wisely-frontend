@@ -9,12 +9,13 @@ import { Container } from "./styles";
 
 interface Props {
   label: string;
+  type?: "button" | "submit" | "reset";
   onClick: () => void;
 }
 
-export const Button: React.FC<Props> = ({ label, onClick }) => {
+export const Button: React.FC<Props> = ({ label, type, onClick }) => {
   return (
-    <Container onClick={onClick}>
+    <Container onClick={onClick} type={type}>
       <Typography fontWeight="bold" $variant="p">
         {label}
       </Typography>
