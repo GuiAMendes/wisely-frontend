@@ -74,7 +74,7 @@ export const SignUp: React.FC = () => {
             <Input
               required
               label="Email:"
-              placeholder="Enter your  email"
+              placeholder="Enter your email"
               errors={errors.email}
               value={signUpInfos.email}
               onChangeText={(value) => handleChange({ email: value })}
