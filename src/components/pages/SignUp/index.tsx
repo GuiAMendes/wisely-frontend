@@ -28,11 +28,11 @@ export const SignUp: React.FC = () => {
   const { errors, signUpInfos, handleChange, handleSignUp } = useSignUp();
 
   // Function
-  const handleSubmit = (event?: React.FormEvent) => {
+  function handleSubmit(event?: React.FormEvent) {
     event?.preventDefault();
 
     handleSignUp();
-  };
+  }
 
   return (
     <Container>

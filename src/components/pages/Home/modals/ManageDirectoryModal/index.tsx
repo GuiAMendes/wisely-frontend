@@ -35,6 +35,12 @@ export const ManageDirectoryModal = React.forwardRef<
   } = useManageDirectory(props);
   useImperativeHandle(ref, handleRefMethods);
 
+  // Functions{
+  function handleSubmit(event?: React.FormEvent) {
+    event?.preventDefault();
+    handleCreateDirectory();
+  }
+
   return (
     <Modal
       open={visible}
@@ -42,7 +48,7 @@ export const ManageDirectoryModal = React.forwardRef<
       title="Create new directory"
       icon={<FaRegFolderOpen size={24} />}
     >
-      <Container>
+      <Container onSubmit={handleSubmit}>
         <Input
           label="Name:"
           errors={errors.name}
@@ -51,7 +57,11 @@ export const ManageDirectoryModal = React.forwardRef<
           onChangeText={(v) => handleUserInfosChange({ name: v })}
         />
 
-        <Button label="Create Directory" onClick={handleCreateDirectory} />
+        <Button
+          type="submit"
+          label="Create Directory"
+          onClick={handleCreateDirectory}
+        />
       </Container>
     </Modal>
   );
