@@ -12,6 +12,7 @@ import { useLogin } from "@contexts/AuthContext";
 // Types
 import { UseManageDirectoryParams } from "./types";
 import { DirectoryInfos } from "./types/directoryInfos";
+import { toast } from "sonner";
 
 export function useManageDirectory({ refresh }: UseManageDirectoryParams) {
   // States
@@ -48,9 +49,13 @@ export function useManageDirectory({ refresh }: UseManageDirectoryParams) {
       });
 
       handleClose();
-      refresh();
+
+      toast.success(`${directoryInfos.name} foi criado com sucesso`);
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await refresh();
     } catch (error) {
-      console.log(error);
+      const directoryError = error as Error;
+      toast.error(directoryError.message);
     }
   }
 
