@@ -31,7 +31,7 @@ export function useLogin() {
     setLoginInfos((prev) => ({ ...prev, ...loginInfo }));
   }
 
-  async function handleSubmit() {
+  async function handleLogin() {
     const validationErrors = checkLoginErrors(loginInfos);
     setErrors(validationErrors);
 
@@ -51,6 +51,6 @@ export function useLogin() {
     isLoading,
     loginInfos,
     handleChange,
-    handleSubmit,
+    handleLogin,
   };
 }
