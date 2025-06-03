@@ -9,7 +9,7 @@ import { Button } from "@components/tookit/buttons/Button";
 import { TypeOfJourney } from "./hooks/useManageDirectory/types/journeyInfos";
 
 // Hooks
-import { useManageDirectory } from "./hooks/useManageDirectory";
+import { useManageJourney } from "./hooks/useManageDirectory";
 
 // Types
 import { ManageJourneyModalProps, ManageJourneyModalMethods } from "./types";
@@ -31,7 +31,7 @@ export const ManageJourneyModal = React.forwardRef<
     handleRefMethods,
     handleUserInfosChange,
     handleCreateJourney,
-  } = useManageDirectory(props);
+  } = useManageJourney(props);
   useImperativeHandle(ref, handleRefMethods);
 
   return (

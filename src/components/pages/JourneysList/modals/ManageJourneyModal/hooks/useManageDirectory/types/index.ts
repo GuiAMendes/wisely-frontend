@@ -1,1 +1,1 @@
-export * from './useManageDirectory'
+export * from './useManageJourney'

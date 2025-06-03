@@ -9,10 +9,10 @@ import { checkErrors, makeInitialErrors, makeInitialUserInfos } from "./utils";
 import { createJourney } from "@services/journey";
 
 // Types
-import { UseManageDirectoryParams } from "./types";
+import { UseManageJourneyParams } from "./types";
 import { JourneyErros, JourneyInfos } from "./types/journeyInfos";
 
-export function useManageDirectory({ refresh }: UseManageDirectoryParams) {
+export function useManageJourney({ refresh }: UseManageJourneyParams) {
   // States
   const [visible, setVisible] = useState(false);
   const [journeyInfos, setJourneyInfos] =
