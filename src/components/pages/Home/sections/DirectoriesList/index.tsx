@@ -9,6 +9,7 @@ import { Folder } from "@components/structure/Folder";
 // Styles
 import { Container } from "./styles";
 import { EmptyMessage } from "@components/structure/EmptyMessage";
+import { updatedLastAccess } from "@services/directories/directory.id.updatLastAccess.patch";
 
 interface Props {
   isLoading?: boolean;
@@ -21,6 +22,11 @@ export const DirectoriesList: React.FC<Props> = ({ variant, directories }) => {
   const { push } = useRouter();
 
   // Functions
+  async function handleFolderClick(directoryId: string) {
+    await updatedLastAccess({ directoryId });
+    push(`/directories/${directoryId}/journeys`);
+  }
+
   function renderContent() {
     if (!directories?.length)
       return <EmptyMessage variant={variant} typeOfPageVariant="directory" />;
@@ -29,7 +35,7 @@ export const DirectoriesList: React.FC<Props> = ({ variant, directories }) => {
       <Folder
         key={directory.props.id}
         name={directory.props.directoryName}
-        onClick={() => push(`/directories/${directory.props.id}/journeys`)}
+        onClick={() => handleFolderClick(directory.props.id)}
       />
     ));
   }

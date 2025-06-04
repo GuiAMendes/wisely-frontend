@@ -1,20 +1,22 @@
 // External Libraries
 import React, { useImperativeHandle } from "react";
+import { FaRegFolderOpen } from "react-icons/fa";
 
 // Components
 import { Modal } from "@components/tookit/Modal";
 import { Input } from "@components/tookit/Input";
 import { Button } from "@components/tookit/buttons/Button";
+import { TypeOfJourney } from "./hooks/useManageDirectory/types/journeyInfos";
 
 // Hooks
-import { useManageDirectory } from "./hooks/useManageDirectory";
+import { useManageJourney } from "./hooks/useManageDirectory";
 
 // Types
 import { ManageJourneyModalProps, ManageJourneyModalMethods } from "./types";
 
 // Styles
 import { Container } from "./styles";
-import { FaRegFolderOpen } from "react-icons/fa";
+import { KittenRadio } from "@components/tookit/KittenRadio";
 
 export const ManageJourneyModal = React.forwardRef<
   ManageJourneyModalMethods,
@@ -29,7 +31,7 @@ export const ManageJourneyModal = React.forwardRef<
     handleRefMethods,
     handleUserInfosChange,
     handleCreateJourney,
-  } = useManageDirectory(props);
+  } = useManageJourney(props);
   useImperativeHandle(ref, handleRefMethods);
 
   return (
@@ -46,6 +48,24 @@ export const ManageJourneyModal = React.forwardRef<
           placeholder="Enter name of journey"
           value={journeyInfos.name}
           onChangeText={(v) => handleUserInfosChange({ name: v })}
+        />
+
+        <KittenRadio
+          label="Full"
+          value="full"
+          selected={journeyInfos.type}
+          onChange={(value) =>
+            handleUserInfosChange({ type: value as TypeOfJourney })
+          }
+        />
+
+        <KittenRadio
+          label="Free"
+          value="free"
+          selected={journeyInfos.type}
+          onChange={(value) =>
+            handleUserInfosChange({ type: value as TypeOfJourney })
+          }
         />
 
         <Button label="Create Journey" onClick={handleCreateJourney} />
