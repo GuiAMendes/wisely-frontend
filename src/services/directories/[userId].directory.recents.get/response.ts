@@ -5,5 +5,5 @@ export interface ListRecentDirectoriesAccessed {
 }
 
 export interface HttpResponse {
-  recentDirectoriesAccessed: Directory[];
+  directories: Directory[];
 }
