@@ -18,7 +18,7 @@ export async function updatedLastAccess({
       throw new Error("Token is missing or invalid.");
     }
 
-    const response = await API.patch(url, options);
+    const response = await API.patch(url, {}, options);
     return response.data.recentDirectoriesAccessed;
   } catch (error) {
     console.log(error);
