@@ -10,6 +10,7 @@ import { Folder } from "@components/structure/Folder";
 import { Container } from "./styles";
 import { EmptyMessage } from "@components/structure/EmptyMessage";
 import { updatedLastAccess } from "@services/directories/directory.id.updatLastAccess.patch";
+import { getFolderActions } from "./utils";
 
 interface Props {
   isLoading?: boolean;
@@ -34,6 +35,7 @@ export const DirectoriesList: React.FC<Props> = ({ variant, directories }) => {
     return directories.map((directory) => (
       <Folder
         key={directory.props.id}
+        actionsOptions={getFolderActions()}
         name={directory.props.directoryName}
         onClick={() => handleFolderClick(directory.props.id)}
       />

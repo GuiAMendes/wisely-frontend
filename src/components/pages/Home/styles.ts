@@ -12,7 +12,7 @@ export const PageContent = styled.div`
   display: flex;
   flex-direction: column;
 
-  gap: 2rem;
+  gap: 3.25rem;
 
   padding: 2rem;
 `;
