@@ -25,6 +25,7 @@ export const ManageDirectoryModal = React.forwardRef<
 >((props, ref) => {
   // Hooks
   const {
+    isEditing,
     errors,
     directoryInfos,
     visible,
@@ -45,7 +46,7 @@ export const ManageDirectoryModal = React.forwardRef<
     <Modal
       open={visible}
       onClose={handleClose}
-      title="Create new directory"
+      title={isEditing ? "Edit directory" : "Create new directory"}
       icon={<FaRegFolderOpen size={24} />}
     >
       <Container onSubmit={handleSubmit}>
@@ -59,7 +60,7 @@ export const ManageDirectoryModal = React.forwardRef<
 
         <Button
           type="submit"
-          label="Create Directory"
+          label={isEditing ? "Edit directory" : "Create directory"}
           onClick={handleCreateDirectory}
         />
       </Container>

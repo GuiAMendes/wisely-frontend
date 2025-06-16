@@ -34,6 +34,6 @@ export function useRecentDirectories() {
     recentDirectoriesAccessed: data,
     isLoading,
     error,
-    mutate,
+    refreshRecentAccess: mutate,
   };
 }

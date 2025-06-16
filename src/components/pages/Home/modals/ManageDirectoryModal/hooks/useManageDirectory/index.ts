@@ -2,10 +2,15 @@
 import { useState } from "react";
 
 // Utils
-import { checkErrors, makeInitialErrors, makeInitialUserInfos } from "./utils";
+import {
+  buildDirectoryInfos,
+  checkErrors,
+  makeInitialErrors,
+  makeInitialUserInfos,
+} from "./utils";
 
 // Services
-import { createDirectory } from "@services/directories";
+import { createDirectory, Directory } from "@services/directories";
 
 import { useLogin } from "@contexts/AuthContext";
 
@@ -13,12 +18,18 @@ import { useLogin } from "@contexts/AuthContext";
 import { UseManageDirectoryParams } from "./types";
 import { DirectoryInfos } from "./types/directoryInfos";
 import { toast } from "sonner";
+import { RenameDirectory } from "@services/directories/directory.id.rename.patch";
 
-export function useManageDirectory({ refresh }: UseManageDirectoryParams) {
+export function useManageDirectory({
+  refresh,
+  refreshRecentsAccess,
+}: UseManageDirectoryParams) {
   // States
   const [visible, setVisible] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   const [directoryInfos, setDirectoryInfos] =
     useState<DirectoryInfos>(makeInitialUserInfos);
+  const [directoryId, setDirectoryId] = useState<string>();
   const [errors, setErros] = useState<DirectoryInfos>(makeInitialErrors);
 
   const { user } = useLogin();
@@ -33,7 +44,7 @@ export function useManageDirectory({ refresh }: UseManageDirectoryParams) {
     setDirectoryInfos({ ...directoryInfos, ...changes });
   }
 
-  async function handleCreateDirectory() {
+  async function handleManageDirectory() {
     if (!user) return;
 
     const errors = checkErrors(directoryInfos);
@@ -42,24 +53,37 @@ export function useManageDirectory({ refresh }: UseManageDirectoryParams) {
     if (Object.values(errors).some((e) => e)) return;
 
     try {
-      createDirectory({
-        userId: user.id,
-        name: directoryInfos.name,
-        isTemplate: false,
-      });
+      if (isEditing) {
+        await RenameDirectory({
+          directoryId: directoryId as string,
+          newDirectoryName: directoryInfos.name,
+        });
+      } else {
+        await createDirectory({
+          userId: user.id,
+          name: directoryInfos.name,
+          isTemplate: false,
+        });
+      }
 
       handleClose();
 
       toast.success(`${directoryInfos.name} foi criado com sucesso`);
       await new Promise((resolve) => setTimeout(resolve, 1000));
       await refresh();
+      await refreshRecentsAccess();
     } catch (error) {
       const directoryError = error as Error;
       toast.error(directoryError.message);
     }
   }
 
-  function handleOpen() {
+  function handleOpen(directory?: Directory) {
+    if (directory) {
+      setDirectoryId(directory.props.id);
+      setIsEditing(true);
+      setDirectoryInfos(buildDirectoryInfos(directory));
+    }
     setVisible(true);
   }
 
@@ -70,10 +94,11 @@ export function useManageDirectory({ refresh }: UseManageDirectoryParams) {
   return {
     errors,
     visible,
-    handleClose,
+    isEditing,
     directoryInfos,
+    handleClose,
     handleRefMethods,
     handleUserInfosChange,
-    handleCreateDirectory,
+    handleCreateDirectory: handleManageDirectory,
   };
 }
