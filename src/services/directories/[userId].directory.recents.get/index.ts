@@ -19,7 +19,7 @@ export async function getRecentDirectoriesAccessed({
     }
 
     const response = await API.get<HttpResponse>(url, options);
-    return response.data.recentDirectoriesAccessed;
+    return response.data.directories;
   } catch (error) {
     console.log(error);
   }

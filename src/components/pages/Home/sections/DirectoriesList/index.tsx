@@ -10,21 +10,56 @@ import { Folder } from "@components/structure/Folder";
 import { Container } from "./styles";
 import { EmptyMessage } from "@components/structure/EmptyMessage";
 import { updatedLastAccess } from "@services/directories/directory.id.updatLastAccess.patch";
+import { FaEdit, FaTrash } from "react-icons/fa";
+import { useDirectoriesList } from "./hooks/useDirectoriesList";
 
 interface Props {
   isLoading?: boolean;
   variant: "recent-access" | "all";
   directories?: Directory[];
+  refresh: () => void;
+  refreshRecentsAccess: () => void;
+  openManageDirectory: (directory?: Directory) => void;
 }
 
-export const DirectoriesList: React.FC<Props> = ({ variant, directories }) => {
+export const DirectoriesList: React.FC<Props> = ({
+  variant,
+  directories,
+  refresh,
+  refreshRecentsAccess,
+  openManageDirectory,
+}) => {
   // Hooks
   const { push } = useRouter();
+
+  const { handleRemoveDirectory } = useDirectoriesList({
+    refresh,
+    refreshRecentsAccess,
+  });
 
   // Functions
   async function handleFolderClick(directoryId: string) {
     await updatedLastAccess({ directoryId });
     push(`/directories/${directoryId}/journeys`);
+  }
+
+  function getFolderActions(directory: Directory) {
+    return [
+      {
+        id: "edit",
+        icon: <FaEdit />,
+        label: "Renomear",
+        onClick: () => {
+          openManageDirectory(directory);
+        },
+      },
+      {
+        id: "delete",
+        icon: <FaTrash />,
+        label: "Excluir",
+        onClick: () => handleRemoveDirectory(directory),
+      },
+    ];
   }
 
   function renderContent() {
@@ -34,6 +69,7 @@ export const DirectoriesList: React.FC<Props> = ({ variant, directories }) => {
     return directories.map((directory) => (
       <Folder
         key={directory.props.id}
+        actionsOptions={getFolderActions(directory)}
         name={directory.props.directoryName}
         onClick={() => handleFolderClick(directory.props.id)}
       />

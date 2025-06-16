@@ -13,13 +13,21 @@ import { Typography } from "@components/tookit/Typography";
 import { ManageDirectoryModal } from "./modals/ManageDirectoryModal";
 import { ManageDirectoryModalMethods } from "./modals/ManageDirectoryModal/types";
 import { CreateFolder } from "@components/structure/CreateFolder";
+import { Directory } from "@services/directories";
 
 export const Home: React.FC = () => {
   // Refs
   const modalRef = useRef<ManageDirectoryModalMethods>(null);
 
+  // Hooks
   const { directories, mutate } = useDirectories();
-  const { recentDirectoriesAccessed } = useRecentDirectories();
+  const { recentDirectoriesAccessed, refreshRecentAccess } =
+    useRecentDirectories();
+
+  // Functions
+  function handleManegeDirectoryModal(directory?: Directory) {
+    modalRef.current?.open(directory);
+  }
 
   return (
     <Container>
@@ -34,7 +42,7 @@ export const Home: React.FC = () => {
             </Typography>
           </TextContainer>
 
-          <CreateFolder onClick={() => modalRef.current?.open()} />
+          <CreateFolder onClick={() => handleManegeDirectoryModal()} />
         </Wrapper>
 
         <Wrapper>
@@ -46,8 +54,11 @@ export const Home: React.FC = () => {
           </TextContainer>
 
           <DirectoriesList
-            directories={recentDirectoriesAccessed}
             variant="recent-access"
+            refresh={mutate}
+            refreshRecentsAccess={refreshRecentAccess}
+            directories={recentDirectoriesAccessed}
+            openManageDirectory={handleManegeDirectoryModal}
           />
         </Wrapper>
 
@@ -58,11 +69,21 @@ export const Home: React.FC = () => {
             </Typography>
           </TextContainer>
 
-          <DirectoriesList directories={directories} variant="all" />
+          <DirectoriesList
+            variant="all"
+            directories={directories}
+            refresh={mutate}
+            refreshRecentsAccess={refreshRecentAccess}
+            openManageDirectory={handleManegeDirectoryModal}
+          />
         </Wrapper>
       </PageContent>
 
-      <ManageDirectoryModal ref={modalRef} refresh={mutate} />
+      <ManageDirectoryModal
+        ref={modalRef}
+        refresh={mutate}
+        refreshRecentsAccess={refreshRecentAccess}
+      />
     </Container>
   );
 };

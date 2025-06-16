@@ -1,8 +1,11 @@
+import { Directory } from "@services/directories";
+
 export interface ManageDirectoryModalMethods {
-  open: () => void
-  close: () => void
+  open: (directory?: Directory) => void;
+  close: () => void;
 }
 
 export interface ManageDirectoryModalProps {
-  refresh: () => void
+  refresh: () => void;
+  refreshRecentsAccess: () => void;
 }
