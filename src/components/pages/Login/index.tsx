@@ -28,11 +28,11 @@ export const Login: React.FC = () => {
   const { errors, loginInfos, handleChange, handleLogin } = useLogin();
 
   // Function
-  function handleSubmit(event?: React.FormEvent){
+  function handleSubmit(event?: React.FormEvent) {
     event?.preventDefault();
 
     handleLogin();
-  };
+  }
 
   return (
     <Container>
@@ -82,7 +82,7 @@ export const Login: React.FC = () => {
             />
           </InputsWrapper>
 
-          <Button type="submit" label="Sign in" onClick={handleLogin} />
+          <Button type="submit" label="Sign in" />
 
           <TextLinkWrapper>
             <Typography $variant="p" color={theme.colors.text.secondary}>

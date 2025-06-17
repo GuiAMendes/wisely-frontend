@@ -29,3 +29,25 @@ export const Content = styled.div`
     padding: 0 0.5rem;
   }
 `;
+
+export const Wrapper = styled.div`
+  width: 100%;
+`;
+
+export const MoreButton = styled.button`
+  z-index: 10;
+  position: absolute;
+  top: 70%;
+  right: 0.25rem;
+
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+  padding: 0 0.5rem;
+  color: ${({ theme }) => theme.colors.text.secondary};
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.secondary};
+  }
+`;

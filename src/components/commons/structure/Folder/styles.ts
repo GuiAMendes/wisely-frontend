@@ -57,6 +57,10 @@ export const Content = styled.div`
   background-color: ${({ theme }) => theme.colors.primary};
 `;
 
+export const Wrapper = styled.div`
+  width: 100%;
+`;
+
 export const MoreButton = styled.button`
   z-index: 10;
   position: absolute;

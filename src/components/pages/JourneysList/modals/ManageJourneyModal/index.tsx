@@ -6,17 +6,20 @@ import { FaRegFolderOpen } from "react-icons/fa";
 import { Modal } from "@components/tookit/Modal";
 import { Input } from "@components/tookit/Input";
 import { Button } from "@components/tookit/buttons/Button";
-import { TypeOfJourney } from "./hooks/useManageDirectory/types/journeyInfos";
+import { KittenRadio } from "@components/tookit/KittenRadio";
 
 // Hooks
 import { useManageJourney } from "./hooks/useManageDirectory";
 
 // Types
-import { ManageJourneyModalProps, ManageJourneyModalMethods } from "./types";
+import type {
+  ManageJourneyModalProps,
+  ManageJourneyModalMethods,
+} from "./types";
+import type { TypeOfJourney } from "./hooks/useManageDirectory/types/journeyInfos";
 
 // Styles
 import { Container } from "./styles";
-import { KittenRadio } from "@components/tookit/KittenRadio";
 
 export const ManageJourneyModal = React.forwardRef<
   ManageJourneyModalMethods,
@@ -26,6 +29,7 @@ export const ManageJourneyModal = React.forwardRef<
   const {
     errors,
     journeyInfos,
+    isEditing,
     visible,
     handleClose,
     handleRefMethods,
@@ -34,14 +38,19 @@ export const ManageJourneyModal = React.forwardRef<
   } = useManageJourney(props);
   useImperativeHandle(ref, handleRefMethods);
 
+  function handleSubmit(event?: React.FormEvent) {
+    event?.preventDefault();
+    handleCreateJourney();
+  }
+
   return (
     <Modal
       open={visible}
       onClose={handleClose}
-      title="Create new journey"
+      title={isEditing ? "Edit Journey" : "Create new journey"}
       icon={<FaRegFolderOpen size={24} />}
     >
-      <Container>
+      <Container onSubmit={handleSubmit}>
         <Input
           label="Name:"
           errors={errors.name}
@@ -53,6 +62,7 @@ export const ManageJourneyModal = React.forwardRef<
         <KittenRadio
           label="Full"
           value="full"
+          disabled={isEditing}
           selected={journeyInfos.type}
           onChange={(value) =>
             handleUserInfosChange({ type: value as TypeOfJourney })
@@ -62,13 +72,17 @@ export const ManageJourneyModal = React.forwardRef<
         <KittenRadio
           label="Free"
           value="free"
+          disabled={isEditing}
           selected={journeyInfos.type}
           onChange={(value) =>
             handleUserInfosChange({ type: value as TypeOfJourney })
           }
         />
 
-        <Button label="Create Journey" onClick={handleCreateJourney} />
+        <Button
+          label={isEditing ? "Edit journey" : "Create Journey"}
+          type="submit"
+        />
       </Container>
     </Modal>
   );

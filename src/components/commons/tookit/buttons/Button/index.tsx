@@ -10,7 +10,7 @@ import { Container } from "./styles";
 interface Props {
   label: string;
   type?: "button" | "submit" | "reset";
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 export const Button: React.FC<Props> = ({ label, type, onClick }) => {

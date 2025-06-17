@@ -17,13 +17,18 @@ import { Container, PageContent, TextContainer, Wrapper } from "./styles";
 
 // Types
 import type { ManageJourneyModalMethods } from "./modals/ManageJourneyModal/types";
+import { Journey } from "@services/journey";
 
 export const JourneysList: React.FC = () => {
   // Refs
   const modalRef = useRef<ManageJourneyModalMethods>(null);
 
   const { journeys, mutate } = useJourneys();
-  const { recentJourneysAccessed } = useRecentJourneys();
+  const { recentJourneysAccessed, refreshRecents } = useRecentJourneys();
+
+  function openModal(journey?: Journey) {
+    modalRef.current?.open(journey);
+  }
 
   return (
     <Container>
@@ -38,7 +43,7 @@ export const JourneysList: React.FC = () => {
             </Typography>
           </TextContainer>
 
-          <CreateJourney onClick={() => modalRef.current?.open()} />
+          <CreateJourney onClick={() => openModal()} />
         </Wrapper>
 
         <Wrapper>
@@ -52,6 +57,9 @@ export const JourneysList: React.FC = () => {
           <JourneyList
             journeys={recentJourneysAccessed}
             variant="recent-access"
+            refresh={mutate}
+            refreshRecentsAccess={refreshRecents}
+            openManageJourney={openModal}
           />
         </Wrapper>
 
@@ -62,11 +70,21 @@ export const JourneysList: React.FC = () => {
             </Typography>
           </TextContainer>
 
-          <JourneyList journeys={journeys} variant="all" />
+          <JourneyList
+            journeys={journeys}
+            variant="all"
+            refresh={mutate}
+            refreshRecentsAccess={refreshRecents}
+            openManageJourney={openModal}
+          />
         </Wrapper>
       </PageContent>
 
-      <ManageJourneyModal ref={modalRef} refresh={mutate} />
+      <ManageJourneyModal
+        ref={modalRef}
+        refresh={mutate}
+        refreshRecents={refreshRecents}
+      />
     </Container>
   );
 };

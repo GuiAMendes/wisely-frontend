@@ -9,19 +9,52 @@ import { JourneyFile } from "@components/structure/JourneyFile";
 
 // Styles
 import { Container } from "./styles";
+import { FaEdit, FaTrash } from "react-icons/fa";
+import { useDirectoriesList } from "./hooks/useDirectoriesList";
 
 // Types
 interface Props {
   isLoading?: boolean;
   variant: "recent-access" | "all";
   journeys?: Journey[];
+  refresh: () => void;
+  refreshRecentsAccess: () => void;
+  openManageJourney: (journey?: Journey) => void;
 }
 
-export const JourneyList: React.FC<Props> = ({ variant, journeys }) => {
+export const JourneyList: React.FC<Props> = ({
+  variant,
+  journeys,
+  refresh,
+  refreshRecentsAccess,
+  openManageJourney,
+}) => {
   // Hooks
   const { push } = useRouter();
+  const { handleRemoveJourney } = useDirectoriesList({
+    refresh,
+    refreshRecentsAccess,
+  });
 
   // Functions
+  function getFolderActions(journey: Journey) {
+    return [
+      {
+        id: "edit",
+        icon: <FaEdit />,
+        label: "Renomear",
+        onClick: () => {
+          openManageJourney(journey);
+        },
+      },
+      {
+        id: "delete",
+        icon: <FaTrash />,
+        label: "Excluir",
+        onClick: () => handleRemoveJourney(journey),
+      },
+    ];
+  }
   function renderContent() {
     if (!journeys?.length)
       return <EmptyMessage variant={variant} typeOfPageVariant="journey" />;
@@ -30,6 +63,7 @@ export const JourneyList: React.FC<Props> = ({ variant, journeys }) => {
       <JourneyFile
         key={journey.props.id}
         name={journey.props.journeyName}
+        actionsOptions={getFolderActions(journey)}
         onClick={() => push(`/directory/${journey.props.id}/journey`)}
       />
     ));

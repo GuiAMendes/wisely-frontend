@@ -91,7 +91,7 @@ export const SignUp: React.FC = () => {
             />
           </InputsWrapper>
 
-          <Button type="submit" label="Sign up" onClick={handleSignUp} />
+          <Button type="submit" label="Sign up" />
 
           <TextLinkWrapper>
             <Typography $variant="p" color={theme.colors.text.secondary}>

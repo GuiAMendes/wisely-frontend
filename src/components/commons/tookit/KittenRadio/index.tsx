@@ -11,6 +11,7 @@ interface Props {
   value: string;
   selected: string;
   onChange: (value: string) => void;
+  disabled?: boolean;
 }
 
 export const KittenRadio: React.FC<Props> = ({
@@ -18,20 +19,27 @@ export const KittenRadio: React.FC<Props> = ({
   value,
   selected,
   onChange,
+  disabled = false,
 }) => {
   const isSelected = selected === value;
 
   return (
-    <Container onClick={() => onChange(value)}>
+    <Container
+      onClick={() => !disabled && onChange(value)}
+      disabled={disabled}
+    >
       <CustomRadio
         isSelected={isSelected}
         animate={{
-          backgroundColor: isSelected ? theme.colors.primary : "transparent",
+          backgroundColor: isSelected
+            ? theme.colors.primary
+            : "transparent",
           borderColor: isSelected
             ? theme.colors.primary
             : theme.colors.borders.gray,
         }}
         transition={{ duration: 0.3 }}
+        disabled={disabled}
       >
         <AnimatePresence>
           {isSelected ? (

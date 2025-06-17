@@ -5,5 +5,5 @@ export interface ListRecentJourneysAccessed {
 }
 
 export interface HttpResponse {
-  recentJourneysAccessed: Journey[];
+  journeys: Journey[];
 }

@@ -18,7 +18,7 @@ export async function getRecentJourneysAccessed({
       throw new Error("Token is missing or invalid.");
     }
     const response = await API.get<HttpResponse>(url, options);
-    return response.data.recentJourneysAccessed;
+    return response.data.journeys;
   } catch (error) {
     console.log(error);
   }

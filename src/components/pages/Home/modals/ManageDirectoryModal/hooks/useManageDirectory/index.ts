@@ -89,6 +89,8 @@ export function useManageDirectory({
 
   function handleClose() {
     setVisible(false);
+    setDirectoryId(undefined);
+    setDirectoryInfos(makeInitialUserInfos);
   }
 
   return {
