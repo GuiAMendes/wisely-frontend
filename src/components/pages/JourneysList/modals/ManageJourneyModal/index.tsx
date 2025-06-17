@@ -6,17 +6,20 @@ import { FaRegFolderOpen } from "react-icons/fa";
 import { Modal } from "@components/tookit/Modal";
 import { Input } from "@components/tookit/Input";
 import { Button } from "@components/tookit/buttons/Button";
-import { TypeOfJourney } from "./hooks/useManageDirectory/types/journeyInfos";
+import { KittenRadio } from "@components/tookit/KittenRadio";
 
 // Hooks
 import { useManageJourney } from "./hooks/useManageDirectory";
 
 // Types
-import { ManageJourneyModalProps, ManageJourneyModalMethods } from "./types";
+import type {
+  ManageJourneyModalProps,
+  ManageJourneyModalMethods,
+} from "./types";
+import type { TypeOfJourney } from "./hooks/useManageDirectory/types/journeyInfos";
 
 // Styles
 import { Container } from "./styles";
-import { KittenRadio } from "@components/tookit/KittenRadio";
 
 export const ManageJourneyModal = React.forwardRef<
   ManageJourneyModalMethods,

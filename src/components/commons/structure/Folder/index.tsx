@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography } from "@components/tookit/Typography";
 
-import { Container, Tab, Content, MoreButton } from "./styles";
+import { Container, Tab, Content, MoreButton, Wrapper } from "./styles";
 import { ActionOption } from "@components/tookit/ActionsDropDown/types";
 import { useFolder } from "./hooks/useFolder";
 import { ActionsDropDown } from "@components/tookit/ActionsDropDown";
@@ -37,9 +37,9 @@ export const Folder: React.FC<FolderProps> = ({
       </MoreButton>
 
       {isOpen && (
-        <div ref={ref}>
+        <Wrapper ref={ref}>
           <ActionsDropDown actions={actionsOptions} />
-        </div>
+        </Wrapper>
       )}
 
       <Content />
