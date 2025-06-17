@@ -9,8 +9,11 @@ import { HttpResponse, FindDirectoriesByNameInput } from "./response";
 
 export async function FindDirectoriesByName({
   userId,
+  directoryName,
 }: FindDirectoriesByNameInput) {
-  const url = `/${userId}/directories`;
+  const url = `/${userId}/directories?name=${encodeURIComponent(
+    directoryName
+  )}`;
   const options = getAuthHeaders();
 
   try {
