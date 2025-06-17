@@ -1,5 +1,6 @@
 export * from './journey.[journeyId].topic.get'
 export * from './journey.[journeyId].topic.post'
 export * from './journey.[journeyId].topics.get'
+export * from './topic.id.complete.patch'
 export * from './topic.id.rename.patch'
 export * from './types'
