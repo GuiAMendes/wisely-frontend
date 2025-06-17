@@ -61,7 +61,6 @@ export const ManageDirectoryModal = React.forwardRef<
         <Button
           type="submit"
           label={isEditing ? "Edit directory" : "Create directory"}
-          onClick={handleCreateDirectory}
         />
       </Container>
     </Modal>
