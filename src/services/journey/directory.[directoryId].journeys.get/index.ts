@@ -9,8 +9,11 @@ import { HttpResponse, FindJourneyByNameInput } from "./response";
 
 export async function FindJourneyByName({
   directoryId,
+  journeyName,
 }: FindJourneyByNameInput) {
-  const url = `/${directoryId}/journeys`;
+  const url = `/${directoryId}/journeys?name=${encodeURIComponent(
+    journeyName
+  )}`;
   const options = getAuthHeaders();
 
   try {
