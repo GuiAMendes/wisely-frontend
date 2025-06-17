@@ -29,6 +29,7 @@ export const ManageJourneyModal = React.forwardRef<
   const {
     errors,
     journeyInfos,
+    isEditing,
     visible,
     handleClose,
     handleRefMethods,
@@ -46,7 +47,7 @@ export const ManageJourneyModal = React.forwardRef<
     <Modal
       open={visible}
       onClose={handleClose}
-      title="Create new journey"
+      title={isEditing ? "Edit Journey" : "Create new journey"}
       icon={<FaRegFolderOpen size={24} />}
     >
       <Container onSubmit={handleSubmit}>
@@ -61,6 +62,7 @@ export const ManageJourneyModal = React.forwardRef<
         <KittenRadio
           label="Full"
           value="full"
+          disabled={isEditing}
           selected={journeyInfos.type}
           onChange={(value) =>
             handleUserInfosChange({ type: value as TypeOfJourney })
@@ -70,13 +72,17 @@ export const ManageJourneyModal = React.forwardRef<
         <KittenRadio
           label="Free"
           value="free"
+          disabled={isEditing}
           selected={journeyInfos.type}
           onChange={(value) =>
             handleUserInfosChange({ type: value as TypeOfJourney })
           }
         />
 
-        <Button label="Create Journey" type="submit" />
+        <Button
+          label={isEditing ? "Edit journey" : "Create Journey"}
+          type="submit"
+        />
       </Container>
     </Modal>
   );

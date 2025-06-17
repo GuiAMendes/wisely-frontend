@@ -1,6 +1,6 @@
 import { JourneyInfos } from "../types/journeyInfos";
 
-export function makeInitialUserInfos(): JourneyInfos {
+export function makeInitialJourneyInfos(): JourneyInfos {
   return {
     name: ``,
     type: "free",

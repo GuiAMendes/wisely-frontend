@@ -33,6 +33,6 @@ export function useRecentJourneys() {
     recentJourneysAccessed: data,
     isLoading,
     error,
-    mutate,
+    refreshRecents: mutate,
   };
 }

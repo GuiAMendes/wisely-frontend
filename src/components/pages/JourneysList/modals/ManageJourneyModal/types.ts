@@ -1,10 +1,11 @@
+import { Journey } from "@services/journey";
+
 export interface ManageJourneyModalMethods {
-  open: () => void
-  close: () => void
+  open: (journey?: Journey) => void;
+  close: () => void;
 }
 
 export interface ManageJourneyModalProps {
-  refresh: () => void
+  refresh: () => void;
+  refreshRecents: () => void;
 }
-
-
