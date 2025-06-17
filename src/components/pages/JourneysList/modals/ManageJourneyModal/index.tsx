@@ -37,6 +37,11 @@ export const ManageJourneyModal = React.forwardRef<
   } = useManageJourney(props);
   useImperativeHandle(ref, handleRefMethods);
 
+  function handleSubmit(event?: React.FormEvent) {
+    event?.preventDefault();
+    handleCreateJourney();
+  }
+
   return (
     <Modal
       open={visible}
@@ -44,7 +49,7 @@ export const ManageJourneyModal = React.forwardRef<
       title="Create new journey"
       icon={<FaRegFolderOpen size={24} />}
     >
-      <Container>
+      <Container onSubmit={handleSubmit}>
         <Input
           label="Name:"
           errors={errors.name}
@@ -71,7 +76,7 @@ export const ManageJourneyModal = React.forwardRef<
           }
         />
 
-        <Button label="Create Journey" onClick={handleCreateJourney} />
+        <Button label="Create Journey" type="submit" />
       </Container>
     </Modal>
   );
