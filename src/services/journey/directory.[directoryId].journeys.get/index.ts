@@ -5,14 +5,14 @@ import API from "@services/api";
 import { getAuthHeaders } from "@utils/getAuthHeaders";
 
 // Types
-import { HttpResponse, FindDirectoriesByNameInput } from "./response";
+import { HttpResponse, FindJourneyByNameInput } from "./response";
 
-export async function FindDirectoriesByName({
-  userId,
-  directoryName,
-}: FindDirectoriesByNameInput) {
-  const url = `/${userId}/directories?name=${encodeURIComponent(
-    directoryName
+export async function FindJourneyByName({
+  directoryId,
+  journeyName,
+}: FindJourneyByNameInput) {
+  const url = `/${directoryId}/journeys?name=${encodeURIComponent(
+    journeyName
   )}`;
   const options = getAuthHeaders();
 
@@ -22,7 +22,7 @@ export async function FindDirectoriesByName({
     }
 
     const response = await API.get<HttpResponse>(url, options);
-    return response.data.directories;
+    return response.data.journeys;
   } catch (error) {
     console.log(error);
   }
