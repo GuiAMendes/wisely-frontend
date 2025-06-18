@@ -23,10 +23,13 @@ import { EmptyMessage } from "./components/EmptyMessage";
 import { Topic } from "@services/topic";
 import { ManageTopicModalMethods } from "./modals/ManageTopicModal/types";
 import { ManageTopicModal } from "./modals/ManageTopicModal";
+import { ConfirmRemoveModal } from "./modals/ConfirmRemoveModal";
+import { ConfirmRemoveModalMethods } from "./modals/ConfirmRemoveModal/types";
 
 export const TopicsList: React.FC = () => {
   // Refs
   const modalRef = useRef<ManageTopicModalMethods>(null);
+  const removeModalRef = useRef<ConfirmRemoveModalMethods>(null);
   // Hooks
   const { topics, mutate } = useTopicsList({});
 
@@ -60,7 +63,7 @@ export const TopicsList: React.FC = () => {
                 transition={{ delay: 1, duration: 0.5 }}
               >
                 <ul>
-                  {topics.map((topic, index) => (
+                  {topics?.map((topic, index) => (
                     <li key={index}>{topic.props.topicName}</li>
                   ))}
                 </ul>
@@ -81,6 +84,7 @@ export const TopicsList: React.FC = () => {
       </PageContent>
 
       <ManageTopicModal ref={modalRef} refresh={mutate} />
+      <ConfirmRemoveModal ref={removeModalRef} refresh={mutate} />
     </Container>
   );
 };
