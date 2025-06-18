@@ -3,7 +3,7 @@ import React, { useRef } from "react";
 
 // Components
 import { Navigation } from "@components/structure/Navigation";
-import { DirectoriesList } from "./sections/DirectoriesList";
+import { DirectoryItems } from "./sections/DirectoriesItems";
 
 // Styles
 import { Container, PageContent, TextContainer, Wrapper } from "./styles";
@@ -15,7 +15,7 @@ import { ManageDirectoryModalMethods } from "./modals/ManageDirectoryModal/types
 import { CreateFolder } from "@components/structure/CreateFolder";
 import { Directory } from "@services/directories";
 
-export const Home: React.FC = () => {
+export const DirectoriesList: React.FC = () => {
   // Refs
   const modalRef = useRef<ManageDirectoryModalMethods>(null);
 
@@ -53,7 +53,7 @@ export const Home: React.FC = () => {
             </Typography>
           </TextContainer>
 
-          <DirectoriesList
+          <DirectoryItems
             variant="recent-access"
             refresh={mutate}
             refreshRecentsAccess={refreshRecentAccess}
@@ -69,7 +69,7 @@ export const Home: React.FC = () => {
             </Typography>
           </TextContainer>
 
-          <DirectoriesList
+          <DirectoryItems
             variant="all"
             directories={directories}
             refresh={mutate}

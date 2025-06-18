@@ -1,4 +1,4 @@
-import { FaEdit, FaTrash } from "react-icons/fa"; // Exemplos de ícones
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 export function getFolderActions() {
   return [

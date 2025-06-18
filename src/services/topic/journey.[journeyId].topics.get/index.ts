@@ -5,14 +5,14 @@ import API from "@services/api";
 import { getAuthHeaders } from "@utils/getAuthHeaders";
 
 // Types
-import { HttpResponse, FindDirectoriesByNameInput } from "./response";
+import { HttpResponse, FindTopicByNameInput } from "./response";
 
-export async function FindDirectoriesByName({
-  userId,
-  directoryName,
-}: FindDirectoriesByNameInput) {
-  const url = `/${userId}/directories?name=${encodeURIComponent(
-    directoryName
+export async function FindTopicByName({
+  journeyId,
+  topicName,
+}: FindTopicByNameInput) {
+  const url = `/journey/${journeyId}/topics?name=${encodeURIComponent(
+    topicName
   )}`;
   const options = getAuthHeaders();
 
@@ -20,9 +20,8 @@ export async function FindDirectoriesByName({
     if (!options) {
       throw new Error("Token is missing or invalid.");
     }
-
     const response = await API.get<HttpResponse>(url, options);
-    return response.data.directories;
+    return response.data.topics;
   } catch (error) {
     console.log(error);
   }

@@ -30,7 +30,7 @@ export const JourneyList: React.FC<Props> = ({
   openManageJourney,
 }) => {
   // Hooks
-  const { push } = useRouter();
+  const { push, query } = useRouter();
   const { handleRemoveJourney } = useDirectoriesList({
     refresh,
     refreshRecentsAccess,
@@ -64,7 +64,9 @@ export const JourneyList: React.FC<Props> = ({
         key={journey.props.id}
         name={journey.props.journeyName}
         actionsOptions={getFolderActions(journey)}
-        onClick={() => push(`/directory/${journey.props.id}/journey`)}
+        onClick={() =>
+          push(`/directories/${query.id}/journeys/${journey.props.id}/topics`)
+        }
       />
     ));
   }

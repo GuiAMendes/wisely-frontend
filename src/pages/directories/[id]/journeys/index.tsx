@@ -2,9 +2,8 @@
 import { JourneysList } from "@pages/JourneysList";
 import React from "react";
 
-
-const LoginPage: React.FC = () => {
+const JourneysPage: React.FC = () => {
   return <JourneysList />;
 };
 
-export default LoginPage;
+export default JourneysPage;
