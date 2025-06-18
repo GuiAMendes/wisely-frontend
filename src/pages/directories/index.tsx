@@ -1,5 +1,5 @@
 // External libraries
-import { Home } from "@pages/Home";
+import { Home } from "@pages/DirectoriesList";
 import React from "react";
 
 const DirectoriesPage: React.FC = () => {
