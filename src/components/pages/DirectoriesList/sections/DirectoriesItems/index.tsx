@@ -22,7 +22,7 @@ interface Props {
   openManageDirectory: (directory?: Directory) => void;
 }
 
-export const DirectoriesList: React.FC<Props> = ({
+export const DirectoryItems: React.FC<Props> = ({
   variant,
   directories,
   refresh,
