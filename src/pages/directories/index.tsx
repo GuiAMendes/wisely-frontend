@@ -1,9 +1,10 @@
 // External libraries
-import { Home } from "@pages/Home";
+
+import { DirectoriesList } from "@pages/DirectoriesList";
 import React from "react";
 
 const DirectoriesPage: React.FC = () => {
-  return <Home />;
+  return <DirectoriesList />;
 };
 
 export default DirectoriesPage;

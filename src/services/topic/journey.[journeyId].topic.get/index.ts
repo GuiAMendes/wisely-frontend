@@ -7,7 +7,7 @@ import { getAuthHeaders } from "@utils/getAuthHeaders";
 // Types
 import { HttpResponse, ListAllTopicsInput } from "./response";
 
-export async function getJourneys({ journeyId }: ListAllTopicsInput) {
+export async function getTopics({ journeyId }: ListAllTopicsInput) {
   const url = `/journey/${journeyId}/topic`;
   const options = getAuthHeaders();
 

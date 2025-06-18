@@ -1,5 +1,5 @@
-import { Home } from "@pages/Home";
+import { DirectoriesList } from "@pages/DirectoriesList";
 
 export default function Page() {
-  return <Home />;
+  return <DirectoriesList />;
 }
