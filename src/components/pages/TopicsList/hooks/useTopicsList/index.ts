@@ -1,11 +1,10 @@
 // Types
 import useSWR from "swr";
-import { UseTopicsListParams } from "./types";
 import { useRouter } from "next/router";
 import { toast } from "sonner";
 import { completeTopic, getTopics, Topic } from "@services/topic";
 
-export function useTopicsList({}: UseTopicsListParams) {
+export function useTopicsList() {
   // Hooks
   const { query } = useRouter();
 

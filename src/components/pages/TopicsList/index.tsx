@@ -37,7 +37,7 @@ export const TopicsList: React.FC = () => {
   const modalRef = useRef<ManageTopicModalMethods>(null);
   const removeModalRef = useRef<ConfirmRemoveModalMethods>(null);
   // Hooks
-  const { topics, mutate } = useTopicsList({});
+  const { topics, mutate } = useTopicsList();
 
   const hasTopics = !!topics?.length;
 
