@@ -4,7 +4,7 @@ export const Container = styled.div`
   min-width: 5rem;
 
   position: absolute;
-  top: 90%;
+  top: 100%;
   right: 0;
 
   border: 1px solid ${({ theme }) => theme.colors.borders.gray};
