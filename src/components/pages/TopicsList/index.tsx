@@ -1,5 +1,5 @@
 // External Libraries
-import React from "react";
+import React, { useRef } from "react";
 
 // Components
 import { Typography } from "@components/tookit/Typography";
@@ -20,12 +20,21 @@ import {
 import { FaFolderOpen } from "react-icons/fa";
 import { AnimatePresence } from "framer-motion";
 import { EmptyMessage } from "./components/EmptyMessage";
+import { Topic } from "@services/topic";
+import { ManageTopicModalMethods } from "./modals/ManageTopicModal/types";
+import { ManageTopicModal } from "./modals/ManageTopicModal";
 
 export const TopicsList: React.FC = () => {
+  // Refs
+  const modalRef = useRef<ManageTopicModalMethods>(null);
   // Hooks
   const {} = useTopicsList({});
   const topics: string[] = [];
   const hasTopics = !!topics.length;
+
+  function openModal(topic?: Topic) {
+    modalRef.current?.open(topic);
+  }
 
   return (
     <Container>
@@ -64,12 +73,14 @@ export const TopicsList: React.FC = () => {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                <EmptyMessage onAddNewTopic={console.log} />
+                <EmptyMessage onAddNewTopic={() => openModal()} />
               </EmptyState>
             )}
           </AnimatePresence>
         </Card>
       </PageContent>
+
+      <ManageTopicModal ref={modalRef} refresh={console.log} />
     </Container>
   );
 };
