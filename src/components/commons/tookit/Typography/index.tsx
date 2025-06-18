@@ -25,7 +25,7 @@ export const Typography: React.FC<TypographyProps> = (props) => {
 
   return (
     <Container
-      as={as}
+      as={as ? as : variant}
       aria-level={getAriaLevel()}
       {...{
         ...TYPOGRAPHY_STYLES_MAPPER[variant],

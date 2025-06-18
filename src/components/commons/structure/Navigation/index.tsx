@@ -36,25 +36,25 @@ export const Navigation: React.FC = () => {
       </WiselyInfos>
 
       <LinkWrapper>
-        <StyledLink href="./">
+        <StyledLink href="/directories">
           <Typography $variant="p" fontWeight="bold">
             Directories
           </Typography>
         </StyledLink>
 
-        <StyledLink href="./progress">
+        <StyledLink href="/progress">
           <Typography $variant="p" fontWeight="bold">
             Progress
           </Typography>
         </StyledLink>
 
-        <StyledLink href="./conquest">
+        <StyledLink href="/conquest">
           <Typography $variant="p" fontWeight="bold">
             Conquest
           </Typography>
         </StyledLink>
 
-        <StyledLink href="./about-us">
+        <StyledLink href="/about-us">
           <Typography $variant="p" fontWeight="bold">
             About us
           </Typography>
