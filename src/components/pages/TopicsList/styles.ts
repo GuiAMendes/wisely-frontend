@@ -30,7 +30,7 @@ const animateBorder = keyframes`
     border: 2px dotted #aaa;
   }
   100% {
-    border: 2px solid #4CAF50;
+    border: 2px solid #FEDBE2;
   }
 `;
 

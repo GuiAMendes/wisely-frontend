@@ -28,9 +28,9 @@ export const TopicsList: React.FC = () => {
   // Refs
   const modalRef = useRef<ManageTopicModalMethods>(null);
   // Hooks
-  const {} = useTopicsList({});
-  const topics: string[] = [];
-  const hasTopics = !!topics.length;
+  const { topics, mutate } = useTopicsList({});
+
+  const hasTopics = !!topics?.length;
 
   function openModal(topic?: Topic) {
     modalRef.current?.open(topic);
@@ -61,7 +61,7 @@ export const TopicsList: React.FC = () => {
               >
                 <ul>
                   {topics.map((topic, index) => (
-                    <li key={index}>{topic}</li>
+                    <li key={index}>{topic.props.topicName}</li>
                   ))}
                 </ul>
               </TopicsWrapper>
@@ -80,7 +80,7 @@ export const TopicsList: React.FC = () => {
         </Card>
       </PageContent>
 
-      <ManageTopicModal ref={modalRef} refresh={console.log} />
+      <ManageTopicModal ref={modalRef} refresh={mutate} />
     </Container>
   );
 };
