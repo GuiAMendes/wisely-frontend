@@ -8,8 +8,7 @@ export const Container = styled.div`
 `;
 
 export const PageContent = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  display: flex;
 
   gap: 2rem;
 
@@ -18,8 +17,6 @@ export const PageContent = styled.div`
 
 export const Firula = styled.div`
   display: flex;
-
-  width: 100%;
 
   gap: 1rem;
 
@@ -45,8 +42,9 @@ export const CardImage = styled.div`
 
 export const Card = styled.div`
   display: flex;
+  flex-direction: column;
 
-  min-width: 13.5rem;
+  width: 15rem;
 
   align-items: center;
 
@@ -54,7 +52,7 @@ export const Card = styled.div`
 
   padding: 2rem;
 
-  background-color: ${({ theme }) => theme.colors.primary};
+  border: 1px solid ${({ theme }) => theme.colors.primary};
 
   border-radius: 30px;
 `;

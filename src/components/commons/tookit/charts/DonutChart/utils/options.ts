@@ -28,6 +28,11 @@ export function getOptions({ categories }: GetOptionsParams): ApexOptions {
       },
     },
     tooltip: {
+      theme: "dark",
+      fillSeriesColor: false,
+      style: {
+        fontSize: "14px",
+      },
       y: {
         formatter: function (val: number) {
           return `${val}`;
@@ -55,7 +60,7 @@ export function getOptions({ categories }: GetOptionsParams): ApexOptions {
               show: true,
               label: "Total",
               fontSize: "16px",
-              formatter: function (w) {
+              formatter: function (w: { globals: { seriesTotals: number[] } }) {
                 const total = w.globals.seriesTotals.reduce(
                   (a: number, b: number) => a + b,
                   0
@@ -65,8 +70,18 @@ export function getOptions({ categories }: GetOptionsParams): ApexOptions {
             },
           },
         },
+        expandOnClick: false,
       },
     },
-    colors: ["#008FFB", "#00E396", "#FEB019", "#FF4560", "#775DD0"],
+
+    states: {
+      hover: {
+        filter: {
+          type: "darken",
+        },
+      },
+    },
+
+    colors: ["#FDC3CF", "#F8BBD0", "#F48FB1", "#F06292", "#EC407A"],
   };
 }
