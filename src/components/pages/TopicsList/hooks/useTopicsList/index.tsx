@@ -19,7 +19,7 @@ export function useTopicsList() {
   const removeModalRef = useRef<ConfirmRemoveModalMethods>(null);
 
   // Hooks
-  const { query, push } = useRouter();
+  const { query, push, replace } = useRouter();
 
   // Constants
   const id = query.id as string;
@@ -51,6 +51,9 @@ export function useTopicsList() {
       await CompleteJourney({ journeyId });
       toast.success("Jornada completa");
       sprinklePinkJoy();
+      mutate();
+
+      replace(`/directories/${id}/journeys/${journeyId}/completed/true/topics`);
     } catch {
       toast.error("Erro ao completar jornada");
     }
