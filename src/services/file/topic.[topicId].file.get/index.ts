@@ -7,7 +7,7 @@ import { getAuthHeaders } from "@utils/getAuthHeaders";
 // Types
 import type { ListAllFilesInput, HttpResponse } from "./response";
 
-export async function createFile({ idTopic }: ListAllFilesInput) {
+export async function listAllFiles({ idTopic }: ListAllFilesInput) {
   const url = `/topic/${idTopic}/file`;
   const options = getAuthHeaders();
 
@@ -16,7 +16,7 @@ export async function createFile({ idTopic }: ListAllFilesInput) {
       throw new Error("Token is missing or invalid.");
     }
     const response = await API.get<HttpResponse>(url, options);
-    return response.data;
+    return response.data.files;
   } catch (error) {
     console.log(error);
   }
