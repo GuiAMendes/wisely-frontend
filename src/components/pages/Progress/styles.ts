@@ -25,9 +25,13 @@ export const Firula = styled.div`
 
 export const Column = styled.div`
   display: flex;
-  height: 100%;
+  width: 100%;
+  flex: 1;
   flex-direction: column;
-  justify-content: space-between;
+
+  gap: 1rem;
+
+  box-sizing: border-box;
 `;
 
 export const CardImage = styled.div`
@@ -40,19 +44,40 @@ export const CardImage = styled.div`
   position: relative;
 `;
 
+export const Wrapper = styled.div`
+  display: flex;
+  width: 100%;
+
+  gap: 1rem;
+`;
+
 export const Card = styled.div`
   display: flex;
   flex-direction: column;
 
-  width: 15rem;
-
   align-items: center;
-
-  height: 13.5rem;
 
   padding: 2rem;
 
   border: 1px solid ${({ theme }) => theme.colors.primary};
 
   border-radius: 30px;
+`;
+
+export const BarCard = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  height: 25rem;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 2rem;
+
+  border: 1px solid ${({ theme }) => theme.colors.primary};
+  border-radius: 30px;
+
+  position: relative;
 `;

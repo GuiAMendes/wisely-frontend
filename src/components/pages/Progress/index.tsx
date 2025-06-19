@@ -10,14 +10,17 @@ import { useProgress } from "./hooks/useProgress";
 
 // Styles
 import {
+  BarCard,
   Card,
   CardImage,
   Column,
   Container,
   Firula,
   PageContent,
+  Wrapper,
 } from "./styles";
 import { Typography } from "@components/tookit/Typography";
+import { BarChart } from "@components/tookit/charts/BarChart";
 
 export const Progress: React.FC = () => {
   const { statistics, isLoading } = useProgress();
@@ -61,27 +64,63 @@ export const Progress: React.FC = () => {
             </CardImage>
           </Column>
         </Firula>
-        <Card>
-          <Typography $variant="p" fontWeight="bold">
-            Progresso das Jornadas
-          </Typography>
-          <DonutChart
-            isLoading={isLoading}
-            series={journeySeries}
-            categories={journeyCategories}
-          />
-        </Card>
 
-        <Card>
-          <Typography $variant="p" fontWeight="bold">
-            Progresso dos Tópicos
-          </Typography>
-          <DonutChart
-            isLoading={isLoading}
-            series={topicSeries}
-            categories={topicCategories}
-          />
-        </Card>
+        <Column>
+          <Wrapper>
+            <Card>
+              <Typography $variant="p" fontWeight="bold">
+                Progresso das Jornadas
+              </Typography>
+              <DonutChart
+                isLoading={isLoading}
+                series={journeySeries}
+                categories={journeyCategories}
+              />
+            </Card>
+
+            <Card>
+              <Typography $variant="p" fontWeight="bold">
+                Progresso dos Tópicos
+              </Typography>
+              <DonutChart
+                isLoading={isLoading}
+                series={topicSeries}
+                categories={topicCategories}
+              />
+            </Card>
+          </Wrapper>
+
+          <BarCard>
+            <Typography $variant="p" fontWeight="bold">
+              Progresso por Jornada
+            </Typography>
+
+            <BarChart
+              isLoading={isLoading}
+              categories={
+                statistics?.journeysProgress.map((j) => j.journeyName) ?? []
+              }
+              series={[
+                {
+                  name: "Completos",
+                  data:
+                    statistics?.journeysProgress.map((j) => ({
+                      x: j.journeyName,
+                      y: j.completedTopics,
+                    })) ?? [],
+                },
+                {
+                  name: "Incompletos",
+                  data:
+                    statistics?.journeysProgress.map((j) => ({
+                      x: j.journeyName,
+                      y: j.totalTopics - j.completedTopics,
+                    })) ?? [],
+                },
+              ]}
+            />
+          </BarCard>
+        </Column>
       </PageContent>
     </Container>
   );
