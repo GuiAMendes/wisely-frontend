@@ -1,7 +1,9 @@
-// External Libraries
 import React from "react";
+import Image from "next/image";
 
 // Components
+import { DonutChart } from "@components/tookit/charts/DonutChart";
+import { Navigation } from "@components/structure/Navigation";
 
 // Hooks
 import { useProgress } from "./hooks/useProgress";
@@ -15,12 +17,31 @@ import {
   Firula,
   PageContent,
 } from "./styles";
-import { Navigation } from "@components/structure/Navigation";
-import Image from "next/image";
+import { Typography } from "@components/tookit/Typography";
 
 export const Progress: React.FC = () => {
-  // Hooks
-  const {} = useProgress();
+  const { statistics, isLoading } = useProgress();
+
+  const hasJourneyData =
+    !!statistics?.totalJourneys && statistics.totalJourneys > 0;
+  const hasTopicData = !!statistics?.totalTopics && statistics.totalTopics > 0;
+
+  const journeySeries = hasJourneyData
+    ? [
+        statistics.completedJourneys,
+        statistics.totalJourneys - statistics.completedJourneys,
+      ]
+    : [];
+
+  const topicSeries = hasTopicData
+    ? [
+        statistics.completedTopics,
+        statistics.totalTopics - statistics.completedTopics,
+      ]
+    : [];
+
+  const journeyCategories = ["Completas", "Incompletas"];
+  const topicCategories = ["Completos", "Incompletos"];
 
   return (
     <Container>
@@ -38,12 +59,29 @@ export const Progress: React.FC = () => {
                 style={{ objectFit: "contain", pointerEvents: "none" }}
               />
             </CardImage>
-
-            <Card />
           </Column>
-
-          <Card />
         </Firula>
+        <Card>
+          <Typography $variant="p" fontWeight="bold">
+            Progresso das Jornadas
+          </Typography>
+          <DonutChart
+            isLoading={isLoading}
+            series={journeySeries}
+            categories={journeyCategories}
+          />
+        </Card>
+
+        <Card>
+          <Typography $variant="p" fontWeight="bold">
+            Progresso dos Tópicos
+          </Typography>
+          <DonutChart
+            isLoading={isLoading}
+            series={topicSeries}
+            categories={topicCategories}
+          />
+        </Card>
       </PageContent>
     </Container>
   );
