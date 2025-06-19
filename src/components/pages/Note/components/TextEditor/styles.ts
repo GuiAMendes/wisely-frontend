@@ -1,11 +1,13 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
+  width: 100%;
+  min-height: calc(100vh - 10rem);
+
   background-color: white;
-  padding: 2rem;
+  padding-inline: 2rem;
   border-radius: 16px;
-  max-width: 800px;
-  margin: 2rem auto;
+
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 `;
 
