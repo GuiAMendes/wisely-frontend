@@ -16,11 +16,6 @@ export async function fingSettingsByUser({ userId }: FindSettingsByUserInput) {
     throw new Error("Token is missing or invalid.");
   }
 
-  try {
-    const response = await API.get<Settings>(url, options);
-    return response.data;
-  } catch (error) {
-    console.error("Error fetching user settings:", error);
-    throw error; // relança para tratamento no front
-  }
+  const response = await API.get<Settings>(url, options);
+  return response.data;
 }
