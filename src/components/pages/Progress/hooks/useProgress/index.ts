@@ -1,10 +1,9 @@
 // Types
-import { UseProgressParams } from './types'
 
-export function useProgress({}: UseProgressParams) {
+export function useProgress() {
   // States
 
   // Functions
 
-  return {}
+  return {};
 }
