@@ -49,6 +49,7 @@ export const TopicsList: React.FC = () => {
   const hasTopics = !!topics?.length;
   const { query } = useRouter();
   const isCompletedJourney = query["is-completed"] === "true";
+  const nodesIsCompleteds = nodes.every((node) => !!node.completedAt);
 
   return (
     <Container>
@@ -81,7 +82,7 @@ export const TopicsList: React.FC = () => {
                   onClickAction={handleClickAction}
                   onClickCreateNode={() => openModal()}
                 />
-                {!isCompletedJourney ? (
+                {!isCompletedJourney && nodesIsCompleteds ? (
                   <ButtonContainer>
                     <Button
                       label="Complet this journey"
