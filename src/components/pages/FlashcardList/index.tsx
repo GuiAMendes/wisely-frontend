@@ -18,15 +18,21 @@ import { Container, PageContent, TextContainer, Wrapper } from "./styles";
 import type { ManageFlashcardModalMethods } from "./modals/ManageFlashcardModal/types";
 import { Flashcard } from "@services/flashcard";
 import { FlashcardList } from "./sections/JourneyList";
+import { FlashcardModal } from "./modals/FlashcardModal";
 
 export const FlashCardList: React.FC = () => {
   // Refs
   const modalRef = useRef<ManageFlashcardModalMethods>(null);
+  const flashcardModalRef = useRef<ManageFlashcardModalMethods>(null);
 
   const { flashCardList, mutate } = useFlashCard();
 
   function openModal(flashcard?: Flashcard) {
     modalRef.current?.open(flashcard);
+  }
+
+  function openViewModal(flashcard: Flashcard) {
+    flashcardModalRef.current?.open(flashcard);
   }
 
   return (
@@ -56,11 +62,13 @@ export const FlashCardList: React.FC = () => {
             refresh={mutate}
             flashCards={flashCardList ?? []}
             openManage={openModal}
+            openViewFlashcard={openViewModal}
           />
         </Wrapper>
       </PageContent>
 
       <ManageFlashcardModal ref={modalRef} refresh={mutate} />
+      <FlashcardModal ref={flashcardModalRef} refresh={mutate} />
     </Container>
   );
 };

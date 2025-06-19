@@ -17,12 +17,13 @@ interface Props {
   flashCards: Flashcard[];
   refresh: () => void;
   openManage: (flashcard?: Flashcard) => void;
+  openViewFlashcard: (flashcard: Flashcard) => void;
 }
 
 export const FlashcardList: React.FC<Props> = ({
   flashCards,
   refresh,
-
+  openViewFlashcard,
   openManage,
 }) => {
   // Hooks
@@ -58,7 +59,7 @@ export const FlashcardList: React.FC<Props> = ({
         key={flashcard.props.id}
         name={flashcard.props.question.props.value}
         actionsOptions={getFolderActions(flashcard)}
-        onClick={() => console.log()}
+        onClick={() => openViewFlashcard(flashcard)}
       />
     ));
   }
