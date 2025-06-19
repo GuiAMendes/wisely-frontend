@@ -1,0 +1,6 @@
+export * from './flashcard.id.deactivate.patch'
+export * from './flashcard.id.updateQuestion.patch'
+export * from './flashcard.id.updateResponse.patch'
+export * from './topic.[topicId].flashcard.get'
+export * from './topic.[topicId].flashcard.post'
+export * from './types'

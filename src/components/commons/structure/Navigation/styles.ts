@@ -51,6 +51,6 @@ export const StyledLink = styled(Link)`
   &:hover > *,
   &:focus > *,
   &:active > * {
-    color: ${({ theme }) => theme.colors.primary};
+    color: ${({ theme }) => theme.colors.text.primary};
   }
 `;

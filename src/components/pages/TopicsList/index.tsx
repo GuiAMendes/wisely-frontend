@@ -1,5 +1,5 @@
 // External Libraries
-import React, { useRef } from "react";
+import React from "react";
 import { FaFolderOpen } from "react-icons/fa";
 import { AnimatePresence } from "framer-motion";
 
@@ -14,11 +14,6 @@ import { ConfirmRemoveModal } from "./modals/ConfirmRemoveModal";
 // Hooks
 import { useTopicsList } from "./hooks/useTopicsList";
 
-// Types
-import type { Topic } from "@services/topic";
-import type { ManageTopicModalMethods } from "./modals/ManageTopicModal/types";
-import type { ConfirmRemoveModalMethods } from "./modals/ConfirmRemoveModal/types";
-
 // Styles
 import {
   Card,
@@ -30,38 +25,24 @@ import {
 } from "./styles";
 
 // MOCK
-import { ACTIONS_MOCK, ActionTypesMock, NodeDtoMock, NODES_MOCK } from "./mock";
+
+import { ActionTypes, NodeTopic } from "./types";
+import { ACTIONS } from "./constants";
 
 export const TopicsList: React.FC = () => {
-  // Refs
-  const modalRef = useRef<ManageTopicModalMethods>(null);
-  const removeModalRef = useRef<ConfirmRemoveModalMethods>(null);
   // Hooks
-  const { topics, mutate } = useTopicsList();
+  const {
+    nodes,
+    topics,
+    mutate,
+    modalRef,
+    removeModalRef,
+    openModal,
+    handleClickAction,
+    handleClickNode,
+  } = useTopicsList();
 
   const hasTopics = !!topics?.length;
-
-  function openModal(topic?: Topic) {
-    modalRef.current?.open(topic);
-  }
-
-  // Functions
-  function handleClickNode(node: NodeDtoMock) {
-    console.log(`Node clicked: ${node.id} - ${node.label}`);
-  }
-
-  function handleClickAction(action: ActionTypesMock, node: NodeDtoMock) {
-    switch (action) {
-      case "conclude":
-        return console.log(`Conclude action on node: ${node.label}`);
-      case "edit":
-        return console.log(`Edit action on node: ${node.label}`);
-      case "delete":
-        return console.log(`Delete action on node: ${node.label}`);
-      case "teste":
-        return console.log(`Test action on node: ${node.label}`);
-    }
-  }
 
   return (
     <Container>
@@ -78,7 +59,7 @@ export const TopicsList: React.FC = () => {
 
         <Card $hasTopics={hasTopics}>
           <AnimatePresence>
-            {!hasTopics ? (
+            {hasTopics ? (
               <TopicsWrapper
                 key="topics"
                 initial={{ opacity: 0 }}
@@ -86,14 +67,12 @@ export const TopicsList: React.FC = () => {
                 exit={{ opacity: 0 }}
                 transition={{ delay: 1, duration: 0.5 }}
               >
-                <Journey<NodeDtoMock, ActionTypesMock>
-                  nodes={NODES_MOCK}
-                  actions={ACTIONS_MOCK}
+                <Journey<NodeTopic, ActionTypes>
+                  nodes={nodes}
+                  actions={ACTIONS}
                   onClickNode={handleClickNode}
                   onClickAction={handleClickAction}
-                  onClickCreateNode={() =>
-                    console.log("Open management node modal")
-                  }
+                  onClickCreateNode={() => openModal()}
                 />
               </TopicsWrapper>
             ) : (
