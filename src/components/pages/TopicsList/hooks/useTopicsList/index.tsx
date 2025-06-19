@@ -22,7 +22,9 @@ export function useTopicsList() {
   const { query, push } = useRouter();
 
   // Constants
+  const id = query.id as string;
   const journeyId = query["journey-id"] as string;
+  const isCompletedJourney = query["is-completed"] as string;
 
   const { data, isLoading, mutate } = useSWR(
     `/journey/${journeyId}/topic`,
@@ -78,11 +80,11 @@ export function useTopicsList() {
 
   // Functions
   function handleClickNode(node: NodeTopic) {
-    const { id, "journey-id": journeyId } = query;
-
     if (!id || !journeyId) return;
 
-    push(`/directories/${id}/journeys/${journeyId}/topics/${node.id}/note`);
+    push(
+      `/directories/${id}/journeys/${journeyId}/completed/${isCompletedJourney}/topics/${node.id}/note`
+    );
   }
 
   function parseTopicsToNodeTopic(): NodeTopic[] {

@@ -30,6 +30,7 @@ import {
 import { ActionTypes, NodeTopic } from "./types";
 import { ACTIONS } from "./constants";
 import { Button } from "@components/tookit/buttons/Button";
+import { useRouter } from "next/router";
 
 export const TopicsList: React.FC = () => {
   // Hooks
@@ -46,6 +47,8 @@ export const TopicsList: React.FC = () => {
   } = useTopicsList();
 
   const hasTopics = !!topics?.length;
+  const { query } = useRouter();
+  const isCompletedJourney = query["is-completed"] === "true";
 
   return (
     <Container>
@@ -73,17 +76,19 @@ export const TopicsList: React.FC = () => {
                 <Journey<NodeTopic, ActionTypes>
                   nodes={nodes}
                   actions={ACTIONS}
-                  journeyIsCompleted={false}
+                  journeyIsCompleted={isCompletedJourney}
                   onClickNode={handleClickNode}
                   onClickAction={handleClickAction}
                   onClickCreateNode={() => openModal()}
                 />
-                <ButtonContainer>
-                  <Button
-                    label="Complet this journey"
-                    onClick={completJourneyPatch}
-                  />
-                </ButtonContainer>
+                {!isCompletedJourney ? (
+                  <ButtonContainer>
+                    <Button
+                      label="Complet this journey"
+                      onClick={completJourneyPatch}
+                    />
+                  </ButtonContainer>
+                ) : null}
               </TopicsWrapper>
             ) : (
               <EmptyState
