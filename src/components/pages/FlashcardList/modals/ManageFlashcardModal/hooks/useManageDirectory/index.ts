@@ -18,7 +18,7 @@ import {
   updateResponseFlashcard,
 } from "@services/flashcard";
 
-export function useManageJourney({ refresh }: UseManageFlashcardParams) {
+export function useManageFlashcard({ refresh }: UseManageFlashcardParams) {
   // States
   const [visible, setVisible] = useState(false);
   const [flashCardInfos, setFlashCardInfos] =
@@ -42,7 +42,7 @@ export function useManageJourney({ refresh }: UseManageFlashcardParams) {
     setFlashCardInfos({ ...flashCardInfos, ...changes });
   }
 
-  async function handleCreateJourney() {
+  async function handleManageFlashCard() {
     if (!idTopic) return;
 
     const errors = checkErrors(flashCardInfos);
@@ -100,6 +100,6 @@ export function useManageJourney({ refresh }: UseManageFlashcardParams) {
     flashCardInfos,
     handleRefMethods,
     handleFlashcardChanges,
-    handleCreateJourney,
+    handleManageFlashCard,
   };
 }

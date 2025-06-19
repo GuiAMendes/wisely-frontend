@@ -3,7 +3,8 @@ import styled from "styled-components";
 export const TextAreaContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 1rem;
+
+  gap: 0.5rem;
 `;
 
 export const Label = styled.label`
@@ -16,6 +17,7 @@ export const StyledTextArea = styled.textarea<{ $hasError: boolean }>`
   outline: none;
 
   width: 100%;
+  min-height: 7rem;
   padding: 0.5rem;
   box-sizing: border-box;
 

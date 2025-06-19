@@ -42,7 +42,7 @@ export const JourneyList: React.FC<Props> = ({
       {
         id: "edit",
         icon: <FaEdit />,
-        label: "Renomear",
+        label: "Rename",
         onClick: () => {
           openManageJourney(journey);
         },
@@ -50,7 +50,7 @@ export const JourneyList: React.FC<Props> = ({
       {
         id: "delete",
         icon: <FaTrash />,
-        label: "Excluir",
+        label: "Remove",
         onClick: () => handleRemoveJourney(journey),
       },
     ];

@@ -5,17 +5,17 @@ export function getFolderActions() {
     {
       id: "edit",
       icon: <FaEdit />,
-      label: "Renomear",
+      label: "Rename",
       onClick: () => {
-        console.log(`Renomear `);
+        console.log(`Rename `);
       },
     },
     {
       id: "delete",
       icon: <FaTrash />,
-      label: "Excluir",
+      label: "Remove",
       onClick: () => {
-        console.log(`Excluir pasta )`);
+        console.log(`Remove pasta )`);
       },
     },
   ];

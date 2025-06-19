@@ -20,7 +20,9 @@ export const TextArea: React.FC<TextAreaProps> = ({
 }) => {
   return (
     <TextAreaContainer>
-      <Typography $variant="p">{label}</Typography>
+      <Typography $variant="p" fontWeight="bold">
+        {label}
+      </Typography>
 
       <StyledTextArea
         placeholder={placeholder}
