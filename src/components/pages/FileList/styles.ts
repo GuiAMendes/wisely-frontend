@@ -27,7 +27,3 @@ export const ListContainer = styled.div`
   display: flex;
   gap: 1rem;
 `;
-
-export const ButtonContainer = styled.div`
-  width: 7rem;
-`;

@@ -7,24 +7,25 @@ import React from "react";
 import { useFileList } from "./hooks/useFileList";
 
 // Styles
-import {
-  ButtonContainer,
-  Container,
-  ListContainer,
-  PageContent,
-  Wrapper,
-} from "./styles";
+import { Container, ListContainer, PageContent, Wrapper } from "./styles";
 import { Navigation } from "@components/structure/Navigation";
 import { File } from "@services/file";
 import { FaTrash } from "react-icons/fa";
 import { EmptyMessage } from "@components/structure/EmptyMessage";
 import { JourneyFile } from "@components/structure/JourneyFile";
 import { Typography } from "@components/tookit/Typography";
-import { Button } from "@components/tookit/buttons/Button";
+
+import { FileInput } from "@components/tookit/FileInput";
 
 export const FileList: React.FC = () => {
   // Hooks
-  const { files, handleRemoveFile } = useFileList({});
+  const {
+    files,
+    idTopic,
+    handleRemoveFile,
+    handleAddFile,
+    downloadBase64File,
+  } = useFileList();
   function getFolderActions(file: File) {
     return [
       {
@@ -45,7 +46,13 @@ export const FileList: React.FC = () => {
         key={file.props.id}
         name={file.props.fileName}
         actionsOptions={getFolderActions(file)}
-        onClick={() => console.log()}
+        onClick={() =>
+          downloadBase64File(
+            file.props.filePath.props.encoded,
+            file.props.fileName,
+            file.props.fileType
+          )
+        }
       />
     ));
   }
@@ -54,9 +61,7 @@ export const FileList: React.FC = () => {
     <Container>
       <Navigation />
       <PageContent>
-        <ButtonContainer>
-          <Button label={"Add new file"} />
-        </ButtonContainer>
+        <FileInput idTopic={idTopic} onUpload={handleAddFile} />
 
         <Wrapper>
           <Typography $variant="p" fontWeight="bold">

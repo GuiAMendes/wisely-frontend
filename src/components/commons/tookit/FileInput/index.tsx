@@ -2,6 +2,7 @@ import React from "react";
 import { toast } from "sonner";
 import { Button } from "@components/tookit/buttons/Button";
 import { CreateFileInput } from "@services/file/topic.[topicId].file.post/response";
+import { ButtonContainer, Container } from "./styles";
 
 type FileUploaderProps = {
   idTopic: string;
@@ -12,6 +13,7 @@ export const FileInput: React.FC<FileUploaderProps> = ({
   idTopic,
   onUpload,
 }) => {
+  const MAX_FILE_SIZE = 5 * 1024 * 1024;
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -22,7 +24,10 @@ export const FileInput: React.FC<FileUploaderProps> = ({
       toast.error("Apenas arquivos .txt ou .pdf são permitidos");
       return;
     }
-
+    if (file.size > MAX_FILE_SIZE) {
+      toast.error("Arquivo muito grande (limite de 5MB)");
+      return;
+    }
     const reader = new FileReader();
 
     reader.onloadend = () => {
@@ -47,7 +52,7 @@ export const FileInput: React.FC<FileUploaderProps> = ({
   };
 
   return (
-    <>
+    <Container>
       <input
         id="hidden-file-input"
         type="file"
@@ -55,7 +60,9 @@ export const FileInput: React.FC<FileUploaderProps> = ({
         onChange={handleFileChange}
         style={{ display: "none" }}
       />
-      <Button label="Upload File (.txt, .pdf)" onClick={handleClick} />
-    </>
+      <ButtonContainer>
+        <Button label="Upload File" onClick={handleClick} />
+      </ButtonContainer>
+    </Container>
   );
 };

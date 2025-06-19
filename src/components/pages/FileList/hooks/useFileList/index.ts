@@ -1,12 +1,12 @@
 // Types
 import useSWR from "swr";
-import { UseFileListParams } from "./types";
+
 import { useRouter } from "next/router";
 import { createFile, deactivateFile, File, listAllFiles } from "@services/file";
 import { toast } from "sonner";
 import { CreateFileInput } from "@services/file/topic.[topicId].file.post/response";
 
-export function useFileList({}: UseFileListParams) {
+export function useFileList() {
   // Hooks
   const { query } = useRouter();
 
@@ -49,8 +49,32 @@ export function useFileList({}: UseFileListParams) {
     } catch {}
   }
 
+  function downloadBase64File(
+    base64: string,
+    fileName: string,
+    fileType: string
+  ) {
+    const byteCharacters = atob(base64);
+    const byteNumbers = Array.from(byteCharacters).map((char) =>
+      char.charCodeAt(0)
+    );
+    const byteArray = new Uint8Array(byteNumbers);
+
+    const blob = new Blob([byteArray], { type: fileType });
+    const blobUrl = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = blobUrl;
+    link.download = fileName;
+    link.click();
+
+    URL.revokeObjectURL(blobUrl);
+  }
+
   return {
+    idTopic,
     files: data,
+    downloadBase64File,
     handleRemoveFile,
     handleAddFile,
     mutate,
