@@ -7,7 +7,6 @@ export interface NodeTopic extends BaseNode {
   updatedAt: string;
   completedAt: string;
   isActive: boolean;
-  isConcluded: boolean;
 }
 
 export type ActionTypes = "edit" | "delete" | "conclude";

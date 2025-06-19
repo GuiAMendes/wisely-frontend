@@ -10,6 +10,7 @@ export interface TopicAction<TAction extends string> {
 export interface BaseNode {
   id: string;
   label: string;
+  isCompleted: boolean;
 }
 
 export interface Props<TNode extends BaseNode, TAction extends string> {

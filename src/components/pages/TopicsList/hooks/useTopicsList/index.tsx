@@ -9,6 +9,7 @@ import { useRef } from "react";
 import { ConfirmRemoveModalMethods } from "@pages/TopicsList/modals/ConfirmRemoveModal/types";
 import { ManageTopicModalMethods } from "@pages/TopicsList/modals/ManageTopicModal/types";
 import { launchPinkConfetti } from "./utils/confetti";
+import { increaseProgress } from "@services/progress";
 
 export function useTopicsList() {
   // Refs
@@ -42,6 +43,8 @@ export function useTopicsList() {
   async function handleCompletTopic(topic: Topic) {
     try {
       completeTopic({ topicId: topic.props.id });
+      increaseProgress({ idJourney: journeyId });
+
       toast.success(`Topic is completed`);
       launchPinkConfetti();
       await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -82,7 +85,7 @@ export function useTopicsList() {
         updatedAt: props.updatedAt,
         completedAt: props.completedAt,
         isActive: props.isActive,
-        isConcluded: props.isConcluded,
+        isCompleted: props.isConcluded,
         label: props.topicName,
       };
     });
@@ -97,7 +100,7 @@ export function useTopicsList() {
       updatedAt: node.updatedAt,
       completedAt: node.completedAt,
       isActive: node.isActive,
-      isConcluded: node.isConcluded,
+      isConcluded: node.isCompleted,
     };
 
     return { props };
