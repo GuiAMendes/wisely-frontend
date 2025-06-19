@@ -17,5 +17,5 @@ export interface FileProps {
 }
 
 export interface File {
-  props: File;
+  props: FileProps;
 }
