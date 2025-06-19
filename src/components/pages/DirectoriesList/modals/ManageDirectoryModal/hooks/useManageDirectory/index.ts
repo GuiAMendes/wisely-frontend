@@ -90,6 +90,7 @@ export function useManageDirectory({
 
   function handleClose() {
     setVisible(false);
+    setIsEditing(false);
     setDirectoryId(undefined);
     setDirectoryInfos(makeInitialUserInfos);
   }
