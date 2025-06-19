@@ -8,6 +8,7 @@ import { ActionTypes, NodeTopic } from "@pages/TopicsList/types";
 import { useRef } from "react";
 import { ConfirmRemoveModalMethods } from "@pages/TopicsList/modals/ConfirmRemoveModal/types";
 import { ManageTopicModalMethods } from "@pages/TopicsList/modals/ManageTopicModal/types";
+import { launchPinkConfetti } from "./utils/confetti";
 
 export function useTopicsList() {
   // Refs
@@ -15,7 +16,7 @@ export function useTopicsList() {
   const removeModalRef = useRef<ConfirmRemoveModalMethods>(null);
 
   // Hooks
-  const { query, push } = useRouter();
+  const { query, push, pathname } = useRouter();
 
   // Constants
   const journeyId = query["journey-id"] as string;
@@ -42,6 +43,7 @@ export function useTopicsList() {
     try {
       completeTopic({ topicId: topic.props.id });
       toast.success(`Topic is completed`);
+      launchPinkConfetti();
       await new Promise((resolve) => setTimeout(resolve, 1000));
       await mutate();
     } catch (error) {
@@ -59,7 +61,7 @@ export function useTopicsList() {
 
   // Functions
   function handleClickNode(node: NodeTopic) {
-    push(`/${node.id}/note`);
+    push(`${pathname}/${node.id}/note`);
   }
 
   function parseTopicsToNodeTopic(): NodeTopic[] {
