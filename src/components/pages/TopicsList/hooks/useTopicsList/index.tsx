@@ -10,6 +10,8 @@ import { ConfirmRemoveModalMethods } from "@pages/TopicsList/modals/ConfirmRemov
 import { ManageTopicModalMethods } from "@pages/TopicsList/modals/ManageTopicModal/types";
 import { launchPinkConfetti } from "./utils/confetti";
 import { increaseProgress } from "@services/progress";
+import { CompleteJourney } from "@services/journey";
+import { sprinklePinkJoy } from "@utils/confetti";
 
 export function useTopicsList() {
   // Refs
@@ -37,6 +39,18 @@ export function useTopicsList() {
       return getTopics({ journeyId });
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  async function completJourneyPatch() {
+    if (!journeyId) return;
+
+    try {
+      await CompleteJourney({ journeyId });
+      toast.success("Jornada completa");
+      sprinklePinkJoy();
+    } catch {
+      toast.error("Erro ao completar jornada");
     }
   }
 
@@ -123,6 +137,7 @@ export function useTopicsList() {
 
   return {
     removeModalRef,
+    completJourneyPatch,
     modalRef,
     nodes: parseTopicsToNodeTopic(),
     topics: data,

@@ -66,14 +66,20 @@ export const Card = styled.div<Props>`
 `;
 
 export const TopicsWrapper = styled(motion.div)`
-  margin-top: 1rem;
+  width: 100%;
+  display: flex;
 
-  ul {
-    list-style: disc;
-    margin-left: 1.25rem;
-    color: #333;
-  }
+  flex: 1;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: space-between;
 `;
+
+export const ButtonContainer = styled.div`
+  width: fit-content;
+`;
+
 export const EmptyState = styled(motion.div)`
   display: flex;
   width: 100%;

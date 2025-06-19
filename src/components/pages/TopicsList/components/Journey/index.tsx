@@ -38,7 +38,9 @@ export const Journey = <TNode extends BaseNode, TAction extends string>(
     return (
       <>
         <VerticalLine />
-        <CreateNodeButton onClick={props?.onClickCreateNode} />
+        {props.journeyIsCompleted ? null : (
+          <CreateNodeButton onClick={props?.onClickCreateNode} />
+        )}
       </>
     );
   }
