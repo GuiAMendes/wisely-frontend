@@ -22,8 +22,9 @@ export const UserIdentificationContant = styled.button<Props>`
 `;
 
 export const DropDown = styled.div`
-  min-width: 5rem;
-  width: 14rem;
+  min-width: 14rem;
+
+  width: 100%;
 
   position: absolute;
   top: 100%;
@@ -40,7 +41,6 @@ export const DropDown = styled.div`
   flex-direction: column;
 
   gap: 0.5rem;
-  align-items: center;
 `;
 
 export const AvatarGrid = styled.div`

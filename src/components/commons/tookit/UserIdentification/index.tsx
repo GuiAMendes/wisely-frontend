@@ -22,9 +22,10 @@ import { useLogin } from "@contexts/AuthContext";
 import { useUserSettings } from "./hooks/useUserSettings";
 import { theme } from "@globals/theme";
 import { colorOptions } from "./utils/getColorsOptions";
+import { Button } from "../buttons/Button";
 
 export const UserIdentification: React.FC = () => {
-  const { user } = useLogin();
+  const { user, logout } = useLogin();
   const { data, isOpen, onOpenChange, updateSettingsPatch } = useUserSettings({
     userId: user?.id,
   });
@@ -73,6 +74,7 @@ export const UserIdentification: React.FC = () => {
                   </UserIdentificationContant>
                 ))}
               </AvatarGrid>
+              <Button label="Logout" onClick={logout} />
             </DropDown>
           </Wrapper>
         )}
