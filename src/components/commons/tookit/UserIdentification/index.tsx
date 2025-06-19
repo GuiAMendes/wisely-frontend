@@ -1,5 +1,6 @@
 // External Libraries
 import React from "react";
+import { AnimatePresence } from "framer-motion";
 
 // Components
 import { Typography } from "../Typography";
@@ -8,19 +9,74 @@ import { Typography } from "../Typography";
 import { getInitialsUserName } from "./utils";
 
 // Styles
-import { Container } from "./styles";
+import {
+  Container,
+  DropDown,
+  AvatarGrid,
+  UserIdentificationContant,
+  Wrapper,
+} from "./styles";
+
+// Context & Hooks
+import { useLogin } from "@contexts/AuthContext";
+import { useUserSettings } from "./hooks/useUserSettings";
 import { theme } from "@globals/theme";
+import { colorOptions } from "./utils/getColorsOptions";
 
-interface Props {
-  userName: string;
-}
+export const UserIdentification: React.FC = () => {
+  const { user } = useLogin();
+  const { data, isOpen, onOpenChange, updateSettingsPatch } = useUserSettings({
+    userId: user?.id,
+  });
 
-export const UserIdentification: React.FC<Props> = ({ userName }) => {
+  const primaryColor = data?.colorSchema.primaryColor || theme.colors.secondary;
+  const secondaryColor =
+    data?.colorSchema.secondaryColor || theme.colors.primary;
+
   return (
-    <Container>
-      <Typography $variant="p" color={theme.colors.secondary}>
-        {getInitialsUserName(userName)}
-      </Typography>
+    <Container
+      onMouseEnter={() => onOpenChange(true)}
+      onMouseLeave={() => onOpenChange(false)}
+    >
+      <UserIdentificationContant $secundaryColor={secondaryColor}>
+        <Typography $variant="p" color={primaryColor}>
+          {getInitialsUserName(user?.email)}
+        </Typography>
+      </UserIdentificationContant>
+
+      <AnimatePresence>
+        {isOpen && (
+          <Wrapper
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <DropDown>
+              <Typography $variant="p" fontWeight="bold">
+                Change your avatar
+              </Typography>
+
+              <AvatarGrid>
+                {colorOptions.map((option, index) => (
+                  <UserIdentificationContant
+                    key={index}
+                    $secundaryColor={option.secondary}
+                    onClick={() =>
+                      updateSettingsPatch(option.primary, option.secondary)
+                    }
+                    style={{ width: "2.5rem", height: "2.5rem" }} // aumentar visualmente
+                  >
+                    <Typography $variant="p" color={option.primary}>
+                      {getInitialsUserName(user?.email)}
+                    </Typography>
+                  </UserIdentificationContant>
+                ))}
+              </AvatarGrid>
+            </DropDown>
+          </Wrapper>
+        )}
+      </AnimatePresence>
     </Container>
   );
 };
