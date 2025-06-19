@@ -1,10 +1,11 @@
 // External libraries
-import { Note } from "@pages/Note";
+
+import { FlashcardList } from "@pages/FlashcardList";
 
 import React from "react";
 
-const NotePage: React.FC = () => {
-  return <Note />;
+const FlashCardPage: React.FC = () => {
+  return <FlashcardList />;
 };
 
-export default NotePage;
+export default FlashCardPage;
