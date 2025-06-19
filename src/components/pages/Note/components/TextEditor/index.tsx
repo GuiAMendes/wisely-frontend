@@ -1,20 +1,34 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useEditor, EditorContent, BubbleMenu } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import debounce from "lodash.debounce";
 import { FaBold, FaHeading } from "react-icons/fa";
 
 import { Container, EditorWrapper, Button, BubbleMenuWrapper } from "./styles";
-
 import { Header } from "../Header";
+import { Summary } from "@services/summary";
 
-export const TextEditor = () => {
+interface Props {
+  summary: Summary;
+  onSaveContent: (content: string) => void;
+}
+
+export const TextEditor: React.FC<Props> = ({ summary, onSaveContent }) => {
+  
+  const debouncedSave = useCallback(
+    debounce((content: string) => {
+      onSaveContent(content);
+    }, 500),
+    []
+  );
+
   const editor = useEditor({
     extensions: [StarterKit],
-    content: `
-      <h1>Topic name</h1>
-      <h2>Resume</h2>
-      <p>Start writing your content here...</p>
-    `,
+    content: summary.props.note.props.content,
+    onUpdate({ editor }) {
+      const content = editor.getHTML();
+      debouncedSave(content);
+    },
   });
 
   if (!editor) return null;

@@ -20,6 +20,7 @@ import { useLogin } from "@contexts/AuthContext";
 
 // Types
 import { UseManageTopicParams } from "./types";
+import { createSummary } from "@services/summary";
 
 export function useManageTopic({ refresh }: UseManageTopicParams) {
   // States
@@ -59,10 +60,19 @@ export function useManageTopic({ refresh }: UseManageTopicParams) {
           newTopicName: topicInfos.name,
         });
       } else {
-        await createTopic({
+        const response = await createTopic({
           idJourney,
           name: topicInfos.name,
         });
+
+        if (response) {
+          await createSummary({
+            idTopic: response?.id,
+            title: "<h1>Topic name</h1>",
+            noteContent:
+              "<h1>Topic name</h1><p>Start writing your content here...</p>",
+          });
+        }
       }
 
       handleClose();
