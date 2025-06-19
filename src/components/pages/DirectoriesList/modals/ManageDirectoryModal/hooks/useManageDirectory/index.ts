@@ -58,17 +58,18 @@ export function useManageDirectory({
           directoryId: directoryId as string,
           newDirectoryName: directoryInfos.name,
         });
+        toast.success(`${directoryInfos.name} foi editado com sucesso`);
       } else {
         await createDirectory({
           userId: user.id,
           name: directoryInfos.name,
           isTemplate: false,
         });
+        toast.success(`${directoryInfos.name} foi criado com sucesso`);
       }
 
       handleClose();
 
-      toast.success(`${directoryInfos.name} foi criado com sucesso`);
       await new Promise((resolve) => setTimeout(resolve, 1000));
       await refresh();
       await refreshRecentsAccess();

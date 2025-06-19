@@ -14,18 +14,10 @@ export async function editContentOfSummary({
   const url = `/summary/${idSummary}/editContent`;
   const options = getAuthHeaders();
 
-  try {
-    if (!options) {
-      throw new Error("Token is missing or invalid.");
-    }
-
-    const response = await API.patch<HttpResponse>(
-      url,
-      { newContent },
-      options
-    );
-    return response.data;
-  } catch (error) {
-    console.log(error);
+  if (!options) {
+    throw new Error("Token is missing or invalid.");
   }
+
+  const response = await API.patch<HttpResponse>(url, { newContent }, options);
+  return response.data;
 }

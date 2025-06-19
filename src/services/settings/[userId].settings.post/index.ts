@@ -11,14 +11,10 @@ export async function createSettings({ userId }: CreateSettingsInput) {
   const url = `/${userId}/settings`;
   const options = getAuthHeaders();
 
-  try {
-    if (!options) {
-      throw new Error("Token is missing or invalid.");
-    }
-
-    const response = await API.post<HttpResponse>(url, {}, options);
-    return response.data;
-  } catch (error) {
-    console.log(error);
+  if (!options) {
+    throw new Error("Token is missing or invalid.");
   }
+
+  const response = await API.post<HttpResponse>(url, {}, options);
+  return response.data;
 }

@@ -12,14 +12,15 @@ export async function fingSettingsByUser({ userId }: FindSettingsByUserInput) {
   const url = `/${userId}/settings`;
   const options = getAuthHeaders();
 
-  try {
-    if (!options) {
-      throw new Error("Token is missing or invalid.");
-    }
+  if (!options) {
+    throw new Error("Token is missing or invalid.");
+  }
 
+  try {
     const response = await API.get<Settings>(url, options);
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error("Error fetching user settings:", error);
+    throw error; // relança para tratamento no front
   }
 }

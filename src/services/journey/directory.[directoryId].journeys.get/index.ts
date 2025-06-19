@@ -16,14 +16,10 @@ export async function FindJourneyByName({
   )}`;
   const options = getAuthHeaders();
 
-  try {
-    if (!options) {
-      throw new Error("Token is missing or invalid.");
-    }
-
-    const response = await API.get<HttpResponse>(url, options);
-    return response.data.journeys;
-  } catch (error) {
-    console.log(error);
+  if (!options) {
+    throw new Error("Token is missing or invalid.");
   }
+
+  const response = await API.get<HttpResponse>(url, options);
+  return response.data.journeys;
 }
