@@ -17,6 +17,6 @@ export interface SummaryProps {
   isActive: boolean;
 }
 
-export interface Summary {
+export interface  Summary {
   props: SummaryProps;
 }

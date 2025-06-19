@@ -7,11 +7,7 @@ import { getAuthHeaders } from "@utils/getAuthHeaders";
 // Types
 import type { FindSummaryInput, HttpResponse } from "./response";
 
-export async function findSummary({
-  idTopic,
-  title,
-  noteContent,
-}: FindSummaryInput) {
+export async function findSummary({ idTopic }: FindSummaryInput) {
   const url = `/topic/${idTopic}/summary`;
   const options = getAuthHeaders();
 
@@ -20,9 +16,9 @@ export async function findSummary({
       throw new Error("Token is missing or invalid.");
     }
 
-    const response = await API.post<HttpResponse>(
+    const response = await API.get<HttpResponse>(
       url,
-      { title, noteContent },
+
       options
     );
     return response.data.summary;

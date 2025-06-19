@@ -7,7 +7,7 @@ import { getAuthHeaders } from "@utils/getAuthHeaders";
 // Types
 import { HttpResponse, UpdateResponseFlashcardInput } from "./response";
 
-export async function updateQuestionFlashcard({
+export async function updateResponseFlashcard({
   idFlashcard,
   newResponseContent,
 }: UpdateResponseFlashcardInput) {

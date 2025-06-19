@@ -16,7 +16,7 @@ export function useTopicsList() {
   const removeModalRef = useRef<ConfirmRemoveModalMethods>(null);
 
   // Hooks
-  const { query, push, pathname } = useRouter();
+  const { query, push } = useRouter();
 
   // Constants
   const journeyId = query["journey-id"] as string;
@@ -61,7 +61,11 @@ export function useTopicsList() {
 
   // Functions
   function handleClickNode(node: NodeTopic) {
-    push(`${pathname}/${node.id}/note`);
+    const { id, "journey-id": journeyId } = query;
+
+    if (!id || !journeyId) return;
+
+    push(`/directories/${id}/journeys/${journeyId}/topics/${node.id}/note`);
   }
 
   function parseTopicsToNodeTopic(): NodeTopic[] {

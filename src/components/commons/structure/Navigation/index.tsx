@@ -48,7 +48,7 @@ export const Navigation: React.FC = () => {
           </Typography>
         </StyledLink>
 
-        <StyledLink href="/conquest">
+        {/* <StyledLink href="/conquest">
           <Typography $variant="p" fontWeight="bold">
             Conquest
           </Typography>
@@ -58,7 +58,7 @@ export const Navigation: React.FC = () => {
           <Typography $variant="p" fontWeight="bold">
             About us
           </Typography>
-        </StyledLink>
+        </StyledLink> */}
       </LinkWrapper>
 
       <UserIdentification userName={"Ana Livia"} />

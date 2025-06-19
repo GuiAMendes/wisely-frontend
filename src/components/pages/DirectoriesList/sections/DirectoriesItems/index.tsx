@@ -48,7 +48,7 @@ export const DirectoryItems: React.FC<Props> = ({
       {
         id: "edit",
         icon: <FaEdit />,
-        label: "Renomear",
+        label: "Rename",
         onClick: () => {
           openManageDirectory(directory);
         },
@@ -56,7 +56,7 @@ export const DirectoryItems: React.FC<Props> = ({
       {
         id: "delete",
         icon: <FaTrash />,
-        label: "Excluir",
+        label: "Remove",
         onClick: () => handleRemoveDirectory(directory),
       },
     ];
