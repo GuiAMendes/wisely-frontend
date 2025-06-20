@@ -61,7 +61,7 @@ export const Navigation: React.FC = () => {
         </StyledLink> */}
       </LinkWrapper>
 
-      <UserIdentification userName={"Ana Livia"} />
+      <UserIdentification />
     </Container>
   );
 };

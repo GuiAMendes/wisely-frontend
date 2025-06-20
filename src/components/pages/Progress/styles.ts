@@ -8,8 +8,7 @@ export const Container = styled.div`
 `;
 
 export const PageContent = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  display: flex;
 
   gap: 2rem;
 
@@ -19,8 +18,6 @@ export const PageContent = styled.div`
 export const Firula = styled.div`
   display: flex;
 
-  width: 100%;
-
   gap: 1rem;
 
   height: calc(100vh - 10rem);
@@ -28,9 +25,13 @@ export const Firula = styled.div`
 
 export const Column = styled.div`
   display: flex;
-  height: 100%;
+  width: 100%;
+  flex: 1;
   flex-direction: column;
-  justify-content: space-between;
+
+  gap: 1rem;
+
+  box-sizing: border-box;
 `;
 
 export const CardImage = styled.div`
@@ -43,18 +44,40 @@ export const CardImage = styled.div`
   position: relative;
 `;
 
+export const Wrapper = styled.div`
+  display: flex;
+  width: 100%;
+
+  gap: 1rem;
+`;
+
 export const Card = styled.div`
   display: flex;
-
-  min-width: 13.5rem;
+  flex-direction: column;
 
   align-items: center;
 
-  height: 13.5rem;
+  padding: 2rem;
+
+  border: 1px solid ${({ theme }) => theme.colors.primary};
+
+  border-radius: 30px;
+`;
+
+export const BarCard = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  height: 25rem;
+
+  align-items: center;
+  justify-content: center;
 
   padding: 2rem;
 
-  background-color: ${({ theme }) => theme.colors.primary};
-
+  border: 1px solid ${({ theme }) => theme.colors.primary};
   border-radius: 30px;
+
+  position: relative;
 `;

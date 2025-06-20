@@ -65,7 +65,9 @@ export const JourneyList: React.FC<Props> = ({
         name={journey.props.journeyName}
         actionsOptions={getFolderActions(journey)}
         onClick={() =>
-          push(`/directories/${query.id}/journeys/${journey.props.id}/topics`)
+          push(
+            `/directories/${query.id}/journeys/${journey.props.id}/completed/${journey.props.isCompleted}/topics`
+          )
         }
       />
     ));

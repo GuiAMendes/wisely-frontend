@@ -11,14 +11,10 @@ export async function getDirectories({ userId }: ListAllInput) {
   const url = `/${userId}/directory`;
   const options = getAuthHeaders();
 
-  try {
-    if (!options) {
-      throw new Error("Token is missing or invalid.");
-    }
-
-    const response = await API.get<HttpResponse>(url, options);
-    return response.data.directories;
-  } catch (error) {
-    console.log(error);
+  if (!options) {
+    throw new Error("Token is missing or invalid.");
   }
+
+  const response = await API.get<HttpResponse>(url, options);
+  return response.data.directories;
 }

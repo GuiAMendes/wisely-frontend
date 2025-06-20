@@ -15,6 +15,7 @@ import {
 // Types
 import { SignUpErrors, SignUpInfos } from "@pages/SignUp/types";
 import { useRouter } from "next/router";
+import { createSettings } from "@services/settings";
 
 export function useSignUp() {
   // States
@@ -39,10 +40,13 @@ export function useSignUp() {
     if (Object.values(errors).some((error) => error)) return;
 
     try {
-      await postRegister(buildPayload(signUpInfos));
+      const response = await postRegister(buildPayload(signUpInfos));
+      if (response) {
+        await createSettings({ userId: response.id });
+      }
       push("/login");
     } catch (error) {
-      console.error("Erro no login:", error);
+      console.error("Erro no registro:", error);
     }
   }
 

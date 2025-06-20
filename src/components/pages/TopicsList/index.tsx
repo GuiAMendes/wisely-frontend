@@ -22,12 +22,15 @@ import {
   PageContent,
   TopicsWrapper,
   TitleContainer,
+  ButtonContainer,
 } from "./styles";
 
 // MOCK
 
 import { ActionTypes, NodeTopic } from "./types";
 import { ACTIONS } from "./constants";
+import { Button } from "@components/tookit/buttons/Button";
+import { useRouter } from "next/router";
 
 export const TopicsList: React.FC = () => {
   // Hooks
@@ -39,10 +42,14 @@ export const TopicsList: React.FC = () => {
     removeModalRef,
     openModal,
     handleClickAction,
+    completJourneyPatch,
     handleClickNode,
   } = useTopicsList();
 
   const hasTopics = !!topics?.length;
+  const { query } = useRouter();
+  const isCompletedJourney = query["is-completed"] === "true";
+  const nodesIsCompleteds = nodes.every((node) => !!node.completedAt);
 
   return (
     <Container>
@@ -70,10 +77,19 @@ export const TopicsList: React.FC = () => {
                 <Journey<NodeTopic, ActionTypes>
                   nodes={nodes}
                   actions={ACTIONS}
+                  journeyIsCompleted={isCompletedJourney}
                   onClickNode={handleClickNode}
                   onClickAction={handleClickAction}
                   onClickCreateNode={() => openModal()}
                 />
+                {!isCompletedJourney && nodesIsCompleteds ? (
+                  <ButtonContainer>
+                    <Button
+                      label="Complet this journey"
+                      onClick={completJourneyPatch}
+                    />
+                  </ButtonContainer>
+                ) : null}
               </TopicsWrapper>
             ) : (
               <EmptyState

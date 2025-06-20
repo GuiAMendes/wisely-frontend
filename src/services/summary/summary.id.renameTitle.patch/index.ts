@@ -14,14 +14,10 @@ export async function renameTitleOfSummary({
   const url = `/summary/${idSummary}/renameTitle`;
   const options = getAuthHeaders();
 
-  try {
-    if (!options) {
-      throw new Error("Token is missing or invalid.");
-    }
-
-    const response = await API.patch<HttpResponse>(url, { newTitle }, options);
-    return response.data;
-  } catch (error) {
-    console.log(error);
+  if (!options) {
+    throw new Error("Token is missing or invalid.");
   }
+
+  const response = await API.patch<HttpResponse>(url, { newTitle }, options);
+  return response.data;
 }

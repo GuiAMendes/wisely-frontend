@@ -14,18 +14,14 @@ export async function updateQuestionFlashcard({
   const url = `/flashcard/${idFlashcard}/updateQuestion`;
   const options = getAuthHeaders();
 
-  try {
-    if (!options) {
-      throw new Error("Token is missing or invalid.");
-    }
-
-    const response = await API.patch<HttpResponse>(
-      url,
-      { newQuestionContent },
-      options
-    );
-    return response.data;
-  } catch (error) {
-    console.log(error);
+  if (!options) {
+    throw new Error("Token is missing or invalid.");
   }
+
+  const response = await API.patch<HttpResponse>(
+    url,
+    { newQuestionContent },
+    options
+  );
+  return response.data;
 }

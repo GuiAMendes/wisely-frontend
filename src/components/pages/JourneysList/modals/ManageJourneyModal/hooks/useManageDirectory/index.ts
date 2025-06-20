@@ -17,6 +17,7 @@ import { UseManageJourneyParams } from "./types";
 import { JourneyErros, JourneyInfos } from "./types/journeyInfos";
 import { buildJourneyInfos } from "./utils/buildJourneyInfos";
 import { RenameJourney } from "@services/journey/journey.id.rename.patch";
+import { createProgress } from "@services/progress";
 
 export function useManageJourney({
   refresh,
@@ -56,13 +57,17 @@ export function useManageJourney({
 
     try {
       if (journeyId)
-        RenameJourney({ journeyId, newJourneyName: journeyInfos.name });
+        await RenameJourney({ journeyId, newJourneyName: journeyInfos.name });
       else {
-        createJourney({
+        const response = await createJourney({
           directoryId,
           name: journeyInfos.name,
           typeOfJourney: journeyInfos.type,
         });
+
+        if (response) {
+          createProgress({ idJourney: response.id });
+        }
       }
 
       handleClose();

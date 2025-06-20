@@ -9,6 +9,9 @@ import { useRef } from "react";
 import { ConfirmRemoveModalMethods } from "@pages/TopicsList/modals/ConfirmRemoveModal/types";
 import { ManageTopicModalMethods } from "@pages/TopicsList/modals/ManageTopicModal/types";
 import { launchPinkConfetti } from "./utils/confetti";
+import { increaseProgress } from "@services/progress";
+import { CompleteJourney } from "@services/journey";
+import { sprinklePinkJoy } from "@utils/confetti";
 
 export function useTopicsList() {
   // Refs
@@ -16,10 +19,12 @@ export function useTopicsList() {
   const removeModalRef = useRef<ConfirmRemoveModalMethods>(null);
 
   // Hooks
-  const { query, push } = useRouter();
+  const { query, push, replace } = useRouter();
 
   // Constants
+  const id = query.id as string;
   const journeyId = query["journey-id"] as string;
+  const isCompletedJourney = query["is-completed"] as string;
 
   const { data, isLoading, mutate } = useSWR(
     `/journey/${journeyId}/topic`,
@@ -39,9 +44,26 @@ export function useTopicsList() {
     }
   }
 
+  async function completJourneyPatch() {
+    if (!journeyId) return;
+
+    try {
+      await CompleteJourney({ journeyId });
+      toast.success("Jornada completa");
+      sprinklePinkJoy();
+      mutate();
+
+      replace(`/directories/${id}/journeys/${journeyId}/completed/true/topics`);
+    } catch {
+      toast.error("Erro ao completar jornada");
+    }
+  }
+
   async function handleCompletTopic(topic: Topic) {
     try {
       completeTopic({ topicId: topic.props.id });
+      increaseProgress({ idJourney: journeyId });
+
       toast.success(`Topic is completed`);
       launchPinkConfetti();
       await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -61,11 +83,11 @@ export function useTopicsList() {
 
   // Functions
   function handleClickNode(node: NodeTopic) {
-    const { id, "journey-id": journeyId } = query;
-
     if (!id || !journeyId) return;
 
-    push(`/directories/${id}/journeys/${journeyId}/topics/${node.id}/note`);
+    push(
+      `/directories/${id}/journeys/${journeyId}/completed/${isCompletedJourney}/topics/${node.id}/note`
+    );
   }
 
   function parseTopicsToNodeTopic(): NodeTopic[] {
@@ -82,7 +104,7 @@ export function useTopicsList() {
         updatedAt: props.updatedAt,
         completedAt: props.completedAt,
         isActive: props.isActive,
-        isConcluded: props.isConcluded,
+        isCompleted: props.isConcluded,
         label: props.topicName,
       };
     });
@@ -97,7 +119,7 @@ export function useTopicsList() {
       updatedAt: node.updatedAt,
       completedAt: node.completedAt,
       isActive: node.isActive,
-      isConcluded: node.isConcluded,
+      isConcluded: node.isCompleted,
     };
 
     return { props };
@@ -120,6 +142,7 @@ export function useTopicsList() {
 
   return {
     removeModalRef,
+    completJourneyPatch,
     modalRef,
     nodes: parseTopicsToNodeTopic(),
     topics: data,

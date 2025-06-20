@@ -21,6 +21,7 @@ import {
   ContainerCard,
   HorizontalLine,
 } from "./styles";
+import { CompletedFlag } from "./components/CompletedFlag";
 
 interface Props<TNode extends BaseNode, TAction extends string> {
   node: TNode;
@@ -50,6 +51,8 @@ export const NodeCard = <TNode extends BaseNode, TAction extends string>(
         onMouseLeave={() => changeIsOpen(false)}
       >
         {props.node.label}
+
+        <CompletedFlag isCompleted={props.node.isCompleted} />
 
         {isOpen && actionsOptions ? (
           <AnimatePresence>

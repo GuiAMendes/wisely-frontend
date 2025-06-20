@@ -10,6 +10,7 @@ import type { BaseNode, Props } from "./types/types";
 
 // Styles
 import { Container, VerticalLine } from "./styles";
+import { CompletedFlag } from "./components/Node/components/NodeCard/components/CompletedFlag";
 
 export const Journey = <TNode extends BaseNode, TAction extends string>(
   props: Props<TNode, TAction>
@@ -38,7 +39,11 @@ export const Journey = <TNode extends BaseNode, TAction extends string>(
     return (
       <>
         <VerticalLine />
-        <CreateNodeButton onClick={props?.onClickCreateNode} />
+        {props.journeyIsCompleted ? (
+          <CompletedFlag isCompleted={true} />
+        ) : (
+          <CreateNodeButton onClick={props?.onClickCreateNode} />
+        )}
       </>
     );
   }
